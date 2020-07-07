@@ -3,10 +3,24 @@
 # IntegerX is any sort of real or Gaussian integer
 IntegerX = Union{S,Complex{S}} where S<:Integer
 
+RationalX = Union{Rational{S},Complex{Rational{S}}} where S<:Integer
+
+
 function _recip(x::T) where T <: IntegerX
     return 1//x
 end
 _recip(x) = inv(x)
+
+function detx(A::AbstractArray{T}) where T<:IntegerX
+    @info "Using IntegerX detx{$T}"
+    return T(det(A//1))
+end
+
+function detx(A::AbstractArray{T}) where T<:RationalX
+    @info "Using RationalX detx{$T}"
+    return det(A)
+end
+
 
 """
 `detx(A::Matrix{T})` is an exact determinant of the matrix.
@@ -14,7 +28,7 @@ Here `T` can be any kind of integer, rational, `Mod`, or `GF2`.
 
 I hope to expand this to `Polynomial`s.
 """
-function detx(A::Matrix{T}) where T
+function detx(A::AbstractArray{T}) where T
     r,c = size(A)
     @assert r==c "Matrix must be square"
 
@@ -30,12 +44,7 @@ function detx(A::Matrix{T}) where T
         return A[1,1]*A[2,2] - A[1,2]*A[2,1]
     end
 
-    if T <: IntegerX
-        A = _recip(one(T)) .* A  # make it rational
-    else
-        A = copy(A)
-    end
-
+    A = copy(A)
 
     col = A[:,1]  # first column
     if all(col .== 0)
