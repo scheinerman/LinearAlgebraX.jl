@@ -1,9 +1,10 @@
 using Test
 using LinearAlgebra,LinearAlgebraX
 
-A = rand(Int,6,6) .% 100
+A = big.(rand(Int,10,10) .% 100)
 
 @test detx(A) == det(Rational.(A))
+@test detx(A) == det(A')
 
 
 @test true
