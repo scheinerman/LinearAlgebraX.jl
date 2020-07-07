@@ -1,5 +1,9 @@
 module LinearAlgebraX
 
-greet() = print("Hello World!")
+include("detx.jl")
+
+export detx
+
+
 
 end # module
