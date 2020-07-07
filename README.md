@@ -1,2 +1,2 @@
-# LinearAlgebraX.jl
+# LinearAlgebraX
 Exact linear algebra functions
