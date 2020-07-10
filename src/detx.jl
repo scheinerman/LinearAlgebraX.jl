@@ -18,7 +18,14 @@ end
 
 function detx(A::AbstractArray{T,2}) where T
     @info "Using detx! on matrix of type $T"
-    B = copy(A)
+    r,c = size(A)
+    B = Matrix{Any}(undef,r,c)
+    for i=1:r
+        for j=1:c
+            B[i,j] = A[i,j]
+        end
+    end
+    # B = copy(A)
     return detx!(B)
 end
 
