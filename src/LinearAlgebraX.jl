@@ -17,7 +17,7 @@ _recip(x) = inv(x)
 include("row_ops.jl")
 include("detx.jl")
 include("cofactor_det.jl")
-
+include("my_eye.jl")
 
 
 
