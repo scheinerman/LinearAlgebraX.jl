@@ -7,17 +7,17 @@ Here `T` can be any kind of integer, rational, `Mod`, or `GF2`.
 I hope to expand this to `Polynomial`s.
 """
 function detx(A::AbstractArray{T,2}) where T<:IntegerX
-    @info "Using IntegerX detx{$T}"
+    # @info "Using IntegerX detx{$T}"
     return T(det(A//1))
 end
 
 function detx(A::AbstractArray{T,2}) where T<:RationalX
-    @info "Using RationalX detx{$T}"
+    # @info "Using RationalX detx{$T}"
     return det(A)
 end
 
 function detx(A::AbstractArray{T,2}) where T
-    @info "Using detx! on matrix of type $T"
+    # @info "Using detx! on matrix of type $T"
     r,c = size(A)
     B = Matrix{Any}(undef,r,c)
     for i=1:r
@@ -36,6 +36,7 @@ end
 function detx!(A::AbstractArray{T,2}) where T
     r,c = size(A)
     @assert r==c "Matrix must be square"
+
 
     if r==0
         return 1
@@ -56,27 +57,21 @@ function detx!(A::AbstractArray{T,2}) where T
 
     k = findfirst(col .!= 0)  # we pivot here
 
-    b = _recip(A[k,1])
-    row = [b * A[k,j] for j=1:c]
-
-
-    for i=1:r
-        if i != k  # leave row k unchanged
-            a = A[i,1]
-            for j=1:c
-                A[i,j] = A[i,j] - a * row[j]
-            end
-        end
+    sign_factor = 1
+    if k>1
+        sign_factor = -sign_factor
+        row_swap(A,1,k)
     end
 
-    idx = [collect(1:k-1); collect(k+1:r)]
-    B = A[idx,2:end]
+    factor = A[1,1] * sign_factor  # multiply by this at the end
 
-    d =  (-1)^(k-1) * A[k,1] * detx!(B)
+    row_scale!(A,1,inv(A[1,1]))
 
-    if T <: IntegerX
-        return T(d)
+    for i=2:r
+        row_add_mult!(A,1,-A[i,1],i)
     end
 
-    return d
+
+    return detx!(A[2:end,2:end]) * factor
+
 end
