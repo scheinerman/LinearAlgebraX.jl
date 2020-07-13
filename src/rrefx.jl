@@ -1,3 +1,9 @@
+export rrefx, rrefx!
+
+function rrefx(B::Matrix{T}) where T<: IntegerX
+    return rrefx(B//1)
+end 
+
 function rrefx(A::AbstractArray{T,2}) where T
     AA = copy(A)
     rrefx!(AA)

@@ -17,7 +17,11 @@ _recip(x) = inv(x)
 include("row_ops.jl")
 include("detx.jl")
 include("cofactor_det.jl")
-include("my_eye.jl")
+include("eye.jl")
+include("rrefx.jl")
+include("invx.jl")
+include("rankx.jl")
+include("nullspacex.jl")
 
 
 

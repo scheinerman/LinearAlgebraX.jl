@@ -1,0 +1,53 @@
+export rankx
+
+"""
+`rankx(A)` computes the rank of the exact matrix `A`
+"""
+function rankx(A::AbstractArray{T,2})::Int where T
+    r,c = size(A)
+    AA = rrefx(A)
+
+    count = 0
+    for i=1:r
+        if any(AA[i,:] .!= 0)
+            count += 1
+        end
+    end
+    return count
+end
+
+
+"""
+`nullspacex(A)` returns an exact basis for the matrix `A`
+"""
+function nullspacex(A::AbstractArray{T,2}) where T
+    r,c = size(A)
+    B = rrefx(A)
+
+    leads = Int[]
+    # in each row, find first 1
+    for i=1:r
+        row = B[i,:]
+        if all(row .== 0)
+            continue
+        end
+        k = findfirst(row .!= 0)
+        append!(leads,k)
+    end
+
+    frees = setdiff(collect(1:c), leads)
+
+    result = Matrix{T}(c,0)
+    for j in frees
+        v = zeros(T,c)
+        v[j] = 1
+        for i in leads
+            if i<j
+                v[i] = -B[i,j]
+            end
+        end
+        result = [result v]
+    end
+
+    return result
+end

@@ -60,7 +60,7 @@ function detx!(A::AbstractArray{T,2}) where T
     sign_factor = 1
     if k>1
         sign_factor = -sign_factor
-        row_swap(A,1,k)
+        row_swap!(A,1,k)
     end
 
     factor = A[1,1] * sign_factor  # multiply by this at the end
