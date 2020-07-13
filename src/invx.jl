@@ -16,7 +16,7 @@ function invx(A::AbstractArray{T,2}) where T
     B = eye(T,r)
 
     X = [A B]
-    rrefx!(X)
+    X = rrefx(X)
 
     d = [X[i,i] for i=1:r]
     if all(d.==1)
@@ -24,3 +24,10 @@ function invx(A::AbstractArray{T,2}) where T
     end
     @error "Matrix is not intertible"
 end
+
+
+function invx(x::T) where T<:IntegerX
+    return 1//x
+end
+
+invx(x) = 1/x

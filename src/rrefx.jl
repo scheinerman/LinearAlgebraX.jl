@@ -1,8 +1,8 @@
-export rrefx, rrefx!
+export rrefx
 
 function rrefx(B::Matrix{T}) where T<: IntegerX
     return rrefx(B//1)
-end 
+end
 
 function rrefx(A::AbstractArray{T,2}) where T
     AA = copy(A)
@@ -14,7 +14,7 @@ end
 function _pivot!(A::AbstractArray{T,2}, i::Int, j::Int) where T
     r,c = size(A)
     s = A[i,j]
-    row_scale!(A,i,inv(s))
+    row_scale!(A,i,invx(s))
 
     for k=1:r
         if k != i
