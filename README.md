@@ -22,12 +22,60 @@ These functions in this module end with the letter `x`
 and have the same definitions as their counterparts that do not have an `x`.
 For exact types (such as `Int`s) these functions give exact results.
 
-* `detx` -- exact determinant
+* `detx` -- exact determinant (via row reduced echelon form)
+* `cofactor_det`-- slower exact determinant (via cofactor expansion)
 * `nullspacex` -- exact nullspace
 * `rankx` -- exact rankx
 * `invx` -- exact inverse
+* `rrefx` -- row reduced echelon form
+* `eye` -- lovingly restored
 
-#### Example
+## Examples
+
+#### Determinant
+```
+julia> A = ones(Int,10,10)+eye(Int,10);
+
+julia> det(A)
+11.000000000000004
+
+julia> detx(A)
+11
+
+julia> A = rand(Int,20,20) .% 20;
+
+julia> det(A)
+3.3905496651565455e29
+
+julia> detx(A)
+339054966515654744413389494504
+```
+
+#### Nullspace
+
+```
+julia> A = reshape(collect(1:12),3,4)
+3×4 Array{Int64,2}:
+ 1  4  7  10
+ 2  5  8  11
+ 3  6  9  12
+
+julia> nullspacex(A)
+4×2 Array{Rational{BigInt},2}:
+  1//1   2//1
+ -2//1  -3//1
+  1//1   0//1
+  0//1   1//1
+
+julia> nullspace(A)
+4×2 Array{Float64,2}:
+ -0.475185  -0.272395
+  0.430549   0.717376
+  0.564458  -0.617566
+ -0.519821   0.172585
+```
+
+#### Rank
 
 Consider the 12-by-12 Hibert matrix, `H`.
 ```
@@ -54,3 +102,65 @@ julia> rank(H)
 julia> rankx(H)
 12
 ```
+
+#### Inverse
+
+```
+julia> using Mods
+
+julia> A = rand(Mod{11},5,5)
+5×5 Array{Mod{11},2}:
+ Mod{11}(2)   Mod{11}(4)  Mod{11}(4)  Mod{11}(0)   Mod{11}(2)
+ Mod{11}(9)   Mod{11}(4)  Mod{11}(5)  Mod{11}(1)  Mod{11}(10)
+ Mod{11}(3)   Mod{11}(4)  Mod{11}(5)  Mod{11}(6)   Mod{11}(0)
+ Mod{11}(5)  Mod{11}(10)  Mod{11}(4)  Mod{11}(5)   Mod{11}(4)
+ Mod{11}(9)  Mod{11}(10)  Mod{11}(7)  Mod{11}(8)   Mod{11}(9)
+
+julia> B = invx(A)
+5×5 Array{Mod{11},2}:
+ Mod{11}(4)  Mod{11}(5)  Mod{11}(0)   Mod{11}(6)   Mod{11}(8)
+ Mod{11}(7)  Mod{11}(4)  Mod{11}(9)  Mod{11}(10)   Mod{11}(3)
+ Mod{11}(6)  Mod{11}(0)  Mod{11}(2)   Mod{11}(5)   Mod{11}(5)
+ Mod{11}(3)  Mod{11}(4)  Mod{11}(9)  Mod{11}(10)  Mod{11}(10)
+ Mod{11}(9)  Mod{11}(9)  Mod{11}(0)   Mod{11}(8)   Mod{11}(9)
+
+julia> A*B
+5×5 Array{Mod{11},2}:
+ Mod{11}(1)  Mod{11}(0)  Mod{11}(0)  Mod{11}(0)  Mod{11}(0)
+ Mod{11}(0)  Mod{11}(1)  Mod{11}(0)  Mod{11}(0)  Mod{11}(0)
+ Mod{11}(0)  Mod{11}(0)  Mod{11}(1)  Mod{11}(0)  Mod{11}(0)
+ Mod{11}(0)  Mod{11}(0)  Mod{11}(0)  Mod{11}(1)  Mod{11}(0)
+ Mod{11}(0)  Mod{11}(0)  Mod{11}(0)  Mod{11}(0)  Mod{11}(1)
+ ```
+
+ #### Row reduced echelon form
+ 
+ ```
+ julia> A = rand(Int,4,6) .% 10
+4×6 Array{Int64,2}:
+ 6   8  0  -6  -5   4
+ 0  -5  2   0  -3  -4
+ 0  -4  2  -8   7  -8
+ 1  -3  7   2  -6   2
+
+julia> c = A[:,1] + A[:,2] - A[:,3]
+4-element Array{Int64,1}:
+ 14
+ -7
+ -6
+ -9
+
+julia> A = [c A]
+4×7 Array{Int64,2}:
+ 14  6   8  0  -6  -5   4
+ -7  0  -5  2   0  -3  -4
+ -6  0  -4  2  -8   7  -8
+ -9  1  -3  7   2  -6   2
+
+julia> rrefx(A)
+4×7 Array{Rational{Int64},2}:
+ 1//1  0//1  0//1  -1//1  0//1   -23//130  -36//65
+ 0//1  1//1  0//1   1//1  0//1  -883//325  158//325
+ 0//1  0//1  1//1   1//1  0//1   551//650  512//325
+ 0//1  0//1  0//1   0//1  1//1  -379//325  204//325
+ ```

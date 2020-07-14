@@ -8,12 +8,21 @@ I hope to expand this to `Polynomial`s.
 """
 function detx(A::AbstractArray{T,2}) where T<:IntegerX
     # @info "Using IntegerX detx{$T}"
-    return T(det(A//1))
+    try
+        return T(det(A//1))
+    catch
+        A = big.(A)
+        return detx(A)
+    end
 end
 
 function detx(A::AbstractArray{T,2}) where T<:RationalX
     # @info "Using RationalX detx{$T}"
-    return det(A)
+    try
+        return det(A)
+    catch
+        return det(big.(A))
+    end
 end
 
 function detx(A::AbstractArray{T,2}) where T
