@@ -1,5 +1,5 @@
 module LinearAlgebraX
-using LinearAlgebra
+using LinearAlgebra, SimplePolynomials, SimpleRationalFunctions
 
 
 # IntegerX is any sort of real or Gaussian integer
@@ -7,6 +7,8 @@ IntegerX = Union{S,Complex{S}} where S<:Integer
 
 # RationalX is a Rational or Complex Rational based on integers
 RationalX = Union{Rational{S},Complex{Rational{S}}} where S<:Integer
+
+TypeX = Union{IntegerX, RationalX}
 
 
 function _recip(x::T) where T <: IntegerX
@@ -22,7 +24,7 @@ include("rrefx.jl")
 include("invx.jl")
 include("rankx.jl")
 include("nullspacex.jl")
-
+include("char_poly.jl")
 
 
 end # module

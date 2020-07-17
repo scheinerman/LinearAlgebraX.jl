@@ -15,3 +15,15 @@ H = hilbert(12)
 A = ones(Int,3,5)
 N = nullspacex(A)
 @test all(0 .== A*N)
+
+
+using SimplePolynomials
+
+A = triu(ones(Int,5,5))
+p = char_poly(A)
+x = getx()
+@test p == (x-1)^5
+
+A = ones(Int,5,5)
+p = char_poly(A)
+@test p == x^4 * (x-5)

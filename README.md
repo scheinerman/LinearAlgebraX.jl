@@ -29,6 +29,7 @@ For exact types (such as `Int`s) these functions give exact results.
 * `invx` -- exact inverse
 * `rrefx` -- row reduced echelon form
 * `eye` -- lovingly restored
+* `char_poly` -- characteristic polynomial
 
 ## Examples
 
@@ -133,8 +134,31 @@ julia> A*B
  Mod{11}(0)  Mod{11}(0)  Mod{11}(0)  Mod{11}(0)  Mod{11}(1)
  ```
 
+ #### Characteristic polynomial
+
+```
+julia> using SimplePolynomials, LinearAlgebra
+
+julia> x = getx()
+x
+
+julia> A = triu(ones(Int,5,5))
+5×5 Array{Int64,2}:
+ 1  1  1  1  1
+ 0  1  1  1  1
+ 0  0  1  1  1
+ 0  0  0  1  1
+ 0  0  0  0  1
+
+julia> char_poly(A)
+-1 + 5*x - 10*x^2 + 10*x^3 - 5*x^4 + x^5
+
+julia> ans == (x-1)^5
+true
+```
+
  #### Row reduced echelon form
- 
+
  ```
  julia> A = rand(Int,4,6) .% 10
 4×6 Array{Int64,2}:
@@ -164,3 +188,7 @@ julia> rrefx(A)
  0//1  0//1  1//1   1//1  0//1   551//650  512//325
  0//1  0//1  0//1   0//1  1//1  -379//325  204//325
  ```
+
+ ## To do
+
+ Still having some issues with integer overflow.
