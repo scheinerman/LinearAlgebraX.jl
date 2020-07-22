@@ -1,5 +1,5 @@
 module LinearAlgebraX
-using LinearAlgebra, SimplePolynomials, SimpleRationalFunctions
+using LinearAlgebra, SimplePolynomials
 
 
 # IntegerX is any sort of real or Gaussian integer
