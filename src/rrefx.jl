@@ -5,7 +5,7 @@ function rrefx(B::Matrix{T}) where T<: IntegerX
 end
 
 function rrefx(A::AbstractArray{T,2}) where T
-    AA = copy(A)
+    AA = big.(A//1)
     rrefx!(AA)
     return AA
 end

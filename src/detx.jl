@@ -74,7 +74,7 @@ function detx!(A::AbstractArray{T,2}) where T
 
     factor = A[1,1] * sign_factor  # multiply by this at the end
 
-    row_scale!(A,1,inv(A[1,1]))
+    row_scale!(A,1,1//A[1,1])
 
     for i=2:r
         row_add_mult!(A,1,-A[i,1],i)

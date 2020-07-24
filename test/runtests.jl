@@ -32,3 +32,7 @@ T = Mod{17}
 A = rand(T, 6, 6)
 p = char_poly(A)
 @test detx(A) == p(0)
+
+
+A = rand(Int,20,20) .% 100
+@test rankx(A) <= 20

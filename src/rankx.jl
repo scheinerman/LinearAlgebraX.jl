@@ -5,7 +5,15 @@ export rankx
 """
 function rankx(A::AbstractArray{T,2})::Int where T
     r,c = size(A)
-    AA = rrefx(A)
+
+    AA = A//1
+    try
+        rrefx!(AA)
+    catch
+        AA = big.(AA)
+        rrefx!(AA)
+    end
+
 
     count = 0
     for i=1:r
