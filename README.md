@@ -155,6 +155,21 @@ julia> char_poly(A)
 
 julia> ans == (x-1)^5
 true
+
+julia> using Mods
+
+julia> A = rand(Mod{17},4,4)
+4×4 Array{Mod{17},2}:
+ Mod{17}(16)  Mod{17}(10)   Mod{17}(9)  Mod{17}(12)
+ Mod{17}(15)   Mod{17}(1)   Mod{17}(1)   Mod{17}(6)
+  Mod{17}(3)   Mod{17}(2)   Mod{17}(5)  Mod{17}(11)
+  Mod{17}(5)  Mod{17}(15)  Mod{17}(15)   Mod{17}(7)
+
+julia> char_poly(A)
+Mod{17}(1) + Mod{17}(1)*x + Mod{17}(16)*x^2 + Mod{17}(5)*x^3 + Mod{17}(1)*x^4
+
+julia> detx(A)
+Mod{17}(1)
 ```
 
  #### Row reduced echelon form

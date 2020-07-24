@@ -5,7 +5,7 @@ function char_poly(A::Matrix{T}) where T<:TypeX
     @assert r==c "Matrix must be square"
 
     xI = zeros(SimplePolynomial,r,r)
-    x = getx()
+    x = getx(T)
     for i=1:r
         xI[i,i] = x
     end

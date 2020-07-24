@@ -1,5 +1,5 @@
 using Test
-using LinearAlgebra,LinearAlgebraX
+using LinearAlgebra,LinearAlgebraX, Mods
 
 A = big.(rand(Int,10,10) .% 100)
 
@@ -27,3 +27,8 @@ x = getx()
 A = ones(Int,5,5)
 p = char_poly(A)
 @test p == x^4 * (x-5)
+
+T = Mod{17}
+A = rand(T, 6, 6)
+p = char_poly(A)
+@test detx(A) == p(0)
