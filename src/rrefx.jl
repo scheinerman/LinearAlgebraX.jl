@@ -1,11 +1,12 @@
 export rrefx
 
-function rrefx(B::Matrix{T}) where T<: IntegerX
-    return rrefx(B//1)
+function rrefx(A::Matrix{T}) where T<: IntegerX
+    AA = big.(A//1)
+    return rrefx(AA)
 end
 
 function rrefx(A::AbstractArray{T,2}) where T
-    AA = big.(A//1)
+    AA = copy(A)
     rrefx!(AA)
     return AA
 end
