@@ -33,10 +33,10 @@ function rrefx!(A::AbstractArray{T,2}) where T
     for j=1:nc
         # see if column j's first one is at level r or below
         col = A[r:end,j]
-        if all(col .== 0)
+        k = findfirst(col .!= 0)
+        if k === nothing
             continue
         end
-        k = findfirst(col .!= 0)
         row_swap!(A,r,k+r-1)
         _pivot!(A,r,j)
         r += 1

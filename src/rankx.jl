@@ -17,7 +17,7 @@ function rankx(A::AbstractArray{T,2})::Int where T
 
     count = 0
     for i=1:r
-        if any(AA[i,:] .!= 0)
+        if !iszero(AA[i,:])
             count += 1
         end
     end
@@ -36,11 +36,10 @@ function nullspacex(A::AbstractArray{T,2}) where T
     # in each row, find first 1
     for i=1:r
         row = B[i,:]
-        if all(row .== 0)
-            continue
-        end
         k = findfirst(row .!= 0)
-        append!(leads,k)
+        if k !== nothing
+            append!(leads,k)
+        end
     end
 
     frees = setdiff(collect(1:c), leads)

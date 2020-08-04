@@ -11,11 +11,10 @@ function nullspacex(A::Matrix{T}) where T
     # in each row, find first 1
     for i=1:r
         row = B[i,:]
-        if all(row .== 0)
-            continue
-        end
         k = findfirst(row .!= 0)
-        append!(leads,k)
+        if k !== nothing
+            append!(leads,k)
+        end
     end
 
     frees = setdiff(collect(1:c), leads)

@@ -19,7 +19,7 @@ function invx(A::AbstractArray{T,2}) where T
     X = rrefx(X)
 
     d = [X[i,i] for i=1:r]
-    if all(d.==1)
+    if isone(d)
         return X[:,r+1:end]
     end
     @error "Matrix is not intertible"

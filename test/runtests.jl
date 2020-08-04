@@ -14,7 +14,7 @@ H = hilbert(12)
 
 A = ones(Int,3,5)
 N = nullspacex(A)
-@test all(0 .== A*N)
+@test iszero(A*N)
 
 
 using SimplePolynomials

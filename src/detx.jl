@@ -60,7 +60,7 @@ function detx!(A::AbstractArray{T,2}) where T
     end
 
     col = A[:,1]  # first column
-    if all(col .== 0)
+    if iszero(col)
         return 0
     end
 
