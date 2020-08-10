@@ -3,7 +3,7 @@ export rankx
 """
 `rankx(A)` computes the rank of the exact matrix `A`
 """
-function rankx(A::AbstractArray{T,2})::Int where T
+function rankx(A::AbstractMatrix{T})::Int where T
     r,c = size(A)
 
     AA = A//1
@@ -28,7 +28,7 @@ end
 """
 `nullspacex(A)` returns an exact basis for the matrix `A`
 """
-function nullspacex(A::AbstractArray{T,2}) where T
+function nullspacex(A::AbstractMatrix{T}) where T
     r,c = size(A)
     B = rrefx(A)
 

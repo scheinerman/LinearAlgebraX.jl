@@ -5,7 +5,7 @@ export invx
 """
 `invx(A)` for a matrix `A` gives an exact matrix inverse.
 """
-function invx(A::AbstractArray{T,2}) where T
+function invx(A::AbstractMatrix{T}) where T
     r,c = size(A)
     @assert r==c "Matrix must be square"
 
@@ -22,7 +22,7 @@ function invx(A::AbstractArray{T,2}) where T
     if all(d.==1)
         return X[:,r+1:end]
     end
-    @error "Matrix is not intertible"
+    @error "Matrix is not invertible"
 end
 
 

@@ -1,12 +1,12 @@
 export detx
 
 """
-`detx(A::Matrix{T})` is an exact determinant of the matrix.
+`detx(A::AbstractMatrix{T})` is an exact determinant of the matrix.
 Here `T` can be any kind of integer, rational, `Mod`, or `GF2`.
 
 I hope to expand this to `Polynomial`s.
 """
-function detx(A::AbstractArray{T,2}) where T<:IntegerX
+function detx(A::AbstractMatrix{T}) where T<:IntegerX
     # @info "Using IntegerX detx{$T}"
     try
         return T(det(A//1))
@@ -16,7 +16,7 @@ function detx(A::AbstractArray{T,2}) where T<:IntegerX
     end
 end
 
-function detx(A::AbstractArray{T,2}) where T<:RationalX
+function detx(A::AbstractMatrix{T}) where T<:RationalX
     # @info "Using RationalX detx{$T}"
     try
         return det(A)
@@ -25,7 +25,7 @@ function detx(A::AbstractArray{T,2}) where T<:RationalX
     end
 end
 
-function detx(A::AbstractArray{T,2}) where T
+function detx(A::AbstractMatrix{T}) where T
     # @info "Using detx! on matrix of type $T"
     r,c = size(A)
     B = Matrix{Any}(undef,r,c)
@@ -42,7 +42,7 @@ end
 # detx! is the work behind det when we can't use Julia's det.
 # it can modify the matrix so this is not exposed to the general public.
 
-function detx!(A::AbstractArray{T,2}) where T
+function detx!(A::AbstractMatrix{T}) where T
     r,c = size(A)
     @assert r==c "Matrix must be square"
 

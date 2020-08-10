@@ -3,7 +3,7 @@ export nullspacex
 """
 `nullspacex(A)` returns an exact basis for the matrix `A`
 """
-function nullspacex(A::Matrix{T}) where T
+function nullspacex(A::AbstractMatrix{T}) where T
     r,c = size(A)
     B = rrefx(A)
 
@@ -37,6 +37,6 @@ function nullspacex(A::Matrix{T}) where T
 end
 
 
-function nullspacex(A::Matrix{T}) where T<: IntegerX
+function nullspacex(A::AbstractMatrix{T}) where T<: IntegerX
     return nullspacex(big.(A)//1)
 end
