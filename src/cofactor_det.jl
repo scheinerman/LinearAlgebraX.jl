@@ -1,13 +1,13 @@
 export cofactor_det
 
 """
-`cofactor(A::Matrix{T})` computes the determinant of `A` using
+`cofactor(A::AbstractMatrix{T})` computes the determinant of `A` using
 cofactor expansion (which can be slow).
 The return type of this method is a number of type `T`.
 The entires in `A` can be polynomials and that won't work with
 Julia's `det`.
 """
-function cofactor_det(A::Matrix{T}) where T
+function cofactor_det(A::AbstractMatrix{T}) where T
     r,c = size(A)
     @assert r==c "Matrix must be square"
     @assert r>0 "Matrix cannot be 0-by-0"

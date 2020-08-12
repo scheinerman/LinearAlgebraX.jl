@@ -1,6 +1,6 @@
 export char_poly
 
-function char_poly(A::Matrix{T}) where T<:TypeX
+function char_poly(A::AbstractMatrix{T}) where T<:TypeX
     r,c = size(A)
     @assert r==c "Matrix must be square"
 
