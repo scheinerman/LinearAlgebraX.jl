@@ -4,6 +4,14 @@ import Base: Vector, Matrix, adjoint, hash
 import LinearAlgebra: dot 
 export HVector, HMatrix, dot, hash
 
+
+"""
+An `HVector` is a homogeneous vector; two `HVector`s are equal 
+iff they are nonzero multiples of each other.
+
+`HVector(a,b,c,...)` or `HVector([a,b,c,...])` creates a new `HVector `
+with coordinates `(a,b,c,...)`.
+"""
 struct HVector{T}  
     data::Vector{T}
     function HVector(dat::Vector{T}) where T 
@@ -14,10 +22,15 @@ struct HVector{T}
 
 end
 HVector(x...) = HVector(collect(x))
-
 HVector(x::HVector) = HVector(x.data)
 
+"""
+An `HMatrix` is a homogenous matrix; two of these are equal if they are
+nonzero multiples of each other. 
 
+Given a two-dimensional array `A`, `HMatrix(A)` creates a new homogeneous 
+matrix. 
+"""
 struct HMatrix{T}
     data::Matrix{T}
     function HMatrix(dat::AbstractMatrix{T}) where T 
@@ -50,7 +63,10 @@ getindex(x::HObject,k...) = x.data[k...]
 iszero(x::HObject) = iszero(x.data)
 
 
-
+"""
+The `dot` produce of two `HVector`s is either `0` 
+(if they are orthogonal) or `1` (otherwise).
+"""
 function dot(x::HVector, y::HVector)::Int
     d = dot(x.data,y.data)
     if d==0

@@ -205,6 +205,109 @@ julia> rrefx(A)
  0//1  0//1  0//1   0//1  1//1  -379//325  204//325
  ```
 
- ## To do
+ ##  Homogeneous Vectors
 
- Still having some issues with integer overflow.
+ A point in projective space is represented by a *homogeneous vector*. This is 
+ a list of numbers (like an ordinary vector) but two such vectors are equal 
+ if and only if one is a nonzero multiple of the other. 
+
+ We provide the `HVector` type to represent homogeneous vectors. The entries 
+ in an `HVector` are scaled so that the last nonzero coordinate is `1`. 
+ (Technically, we should forbid the all zero vector, but we don't implement
+ that restriction.)
+
+ To create an `HVector` provide either a list (one-dimensional array) of values 
+ or a list of arguments:
+ ```julia
+ julia> v = HVector([1,-2,3])
+HVector(1//3, -2//3, 1//1)
+
+julia> w = HVector(2,-4,6)
+HVector(1//3, -2//3, 1//1)
+
+julia> v==w
+true
+```
+
+Entries in an `HVector` can be retrieved individually, or the entire vector can 
+be converted to an array:
+```julia
+julia> v[2]
+-2//3
+
+julia> Vector(v)
+3-element Array{Rational{Int64},1}:
+  1//3
+ -2//3
+  1//1
+```
+However, entries cannot be assigned:
+```julia
+ulia> v[2] = 3//4
+ERROR: MethodError: no method matching setindex!(::HVector{Rational{Int64}}, ::Rational{Int64}, ::Int64)
+```
+
+### Operations for `HVector`s
+
+The product of a matrix and a homogeneous vector is a homogeneous vector:
+```julia
+julia> A = rand(Int,3,3) .% 5
+3×3 Array{Int64,2}:
+ -1   0   0
+  3   0  -2
+  3  -1  -2
+
+julia> A*v
+HVector(1//1, 3//1, 1//1)
+
+julia> A*Vector(v)
+3-element Array{Rational{Int64},1}:
+ -1//3
+ -1//1
+ -1//3
+```
+
+The dot product of two homogeneous vectors is a scalar. Since homogeneous vectors
+are unchanged by scaling, we only distinguish between zero and nonzero results.
+Specifically, the dot product is `0` if the two vectors are orthogonal and 
+`1` otherwise. 
+```julia
+julia> using Mods
+
+julia> u = Mod{3}(1)
+Mod{3}(1)
+
+julia> v = HVector(u,u,u)
+HVector(Mod{3}(1), Mod{3}(1), Mod{3}(1))
+
+julia> dot(v,v)
+0
+
+julia> w = HVector(-1,2,1)
+HVector(-1//1, 2//1, 1//1)
+
+julia> dot(v,w)
+1
+```
+
+
+### Homogeneous matrices
+
+We also provide `HMatrix` to represent a homogeneous matrix. These are 
+constructed by passing an (ordinary) matrix.
+```julia
+julia> A = rand(Int,3,3).%5
+3×3 Array{Int64,2}:
+ 0  -4   3
+ 1   4  -2
+ 3   0  -3
+
+julia> HMatrix(A)
+HMatrix: Rational{Int64}[0//1 4//3 -1//1; -1//3 -4//3 2//3; -1//1 0//1 1//1]
+
+julia> Matrix(ans)
+3×3 Array{Rational{Int64},2}:
+  0//1   4//3  -1//1
+ -1//3  -4//3   2//3
+ -1//1   0//1   1//1
+ ```
