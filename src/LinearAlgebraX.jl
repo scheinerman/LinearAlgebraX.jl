@@ -25,6 +25,7 @@ include("invx.jl")
 include("rankx.jl")
 include("nullspacex.jl")
 include("char_poly.jl")
+include("homogeneous.jl")
 
 
 end # module
