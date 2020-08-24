@@ -5,7 +5,7 @@ using LinearAlgebra, LinearAlgebraX, Mods
 @testset "Basics" begin
     A = big.(rand(Int, 10, 10) .% 100)
 
-    include("hilbert.jl")
+    include("../extras/hilbert.jl")
 
     H = hilbert(12)
     @test rankx(H) == 12
