@@ -1,4 +1,4 @@
-# Extras Folder
+# Extras for `LinearAlgebraX`
 
 ## Projective planes
 
