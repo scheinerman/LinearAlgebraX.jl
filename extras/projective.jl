@@ -4,7 +4,7 @@ using Mods, Primes, SimpleGraphs, LinearAlgebraX
 `generate_points(p::Int)` generates the homogeneous coordinates of the 
 points in a finite projective plane of prime order `p`.
 """
-function generate_points(p::Integer)
+function generate_points(p::Integer)::Vector{HVector}
     if ~isprime(p)
         error("Modulus $p is not prime")
     end
@@ -38,7 +38,7 @@ end
 `incidence_matrix(p::Int)` creates the point/line incidence matrix 
 of a finite projective plane of prime order `p`.
 """
-function incidence_matrix(p::Int)
+function incidence_matrix(p::Int)::Matrix
     pts = generate_points(p)
     n = p*p + p + 1
     A = zeros(Int,n,n)
@@ -46,7 +46,7 @@ function incidence_matrix(p::Int)
         P = pts[u]
         for v = 1:n
             Q = pts[v]
-            if dot(P,Q)==1
+            if dot(P,Q)==0
                 A[u,v] = 1
             end
         end
@@ -58,9 +58,24 @@ end
 `incidence_graph(p::Int)` creates the bipartite point-line 
 incidence graph of a finite projective plane of prime order `p`.
 """
-function incidence_graph(p::Int)
+function incidence_graph(p::Int)::SimpleGraph{Int}
     M = incidence_matrix(p)
     r,c = size(M)
     A = [ zeros(r,c)  M; copy(M')  zeros(r,c) ]
     G = SimpleGraph(A)
+end 
+
+function incidence_hypergraph(p::Int)::SimpleHypergraph
+    VV = generate_points(p)
+    H = SimpleHypergraph{HVector{Mod{p}}}()
+    for v in VV
+        add!(H,v)
+    end 
+
+    for v in VV 
+        S = [ w for w in VV if dot(v,w)==0 ]
+        add!(H,Set(S))
+    end 
+
+    return H 
 end 
