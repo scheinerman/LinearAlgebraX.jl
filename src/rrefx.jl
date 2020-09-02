@@ -1,5 +1,9 @@
 export rrefx
 
+"""
+`rref(A)`  returns the row-reduced echelon form of the exact 
+matrix `A`.
+"""
 function rrefx(A::AbstractMatrix{T}) where T<: IntegerX
     AA = big.(A//1)
     return rrefx(AA)
