@@ -8,7 +8,7 @@ IntegerX = Union{S,Complex{S}} where S<:Integer
 # RationalX is a Rational or Complex Rational based on integers
 RationalX = Union{Rational{S},Complex{Rational{S}}} where S<:Integer
 
-TypeX = Union{IntegerX, RationalX, Mod}
+TypeX = Union{IntegerX, RationalX, AbstractMod}
 
 
 function _recip(x::T) where T <: IntegerX

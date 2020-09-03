@@ -35,7 +35,11 @@ function detx(A::AbstractMatrix{T}) where T
         end
     end
     # B = copy(A)
-    return detx!(B)
+    try 
+        return detx!(B)
+    catch
+        return cofactor_det(B)  # if all else fails!
+    end
 end
 
 
