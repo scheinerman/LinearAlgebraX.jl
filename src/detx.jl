@@ -38,6 +38,7 @@ function detx(A::AbstractMatrix{T}) where T
     try 
         return detx!(B)
     catch
+        @warn "Using cofactor expansion to calculate determinant; may be very slow."
         return cofactor_det(B)  # if all else fails!
     end
 end

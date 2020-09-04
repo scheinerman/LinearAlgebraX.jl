@@ -53,6 +53,28 @@ julia> detx(A)
 339054966515654744413389494504
 ```
 
+For certain `Mod` matrices, there may be noninvertible nonzero elements in which 
+case the Gaussian elimination algorithm may fail. If that happens, `detx` 
+falls back to using cofactor expansion which may be very slow. Should that 
+happen, a warning is generated.
+```julia
+julia> A = rand(Mod{10},5,5)
+5×5 Array{Mod{10},2}:
+ Mod{10}(6)  Mod{10}(1)  Mod{10}(8)  Mod{10}(7)  Mod{10}(9)
+ Mod{10}(6)  Mod{10}(4)  Mod{10}(6)  Mod{10}(9)  Mod{10}(0)
+ Mod{10}(9)  Mod{10}(8)  Mod{10}(7)  Mod{10}(8)  Mod{10}(0)
+ Mod{10}(9)  Mod{10}(1)  Mod{10}(9)  Mod{10}(1)  Mod{10}(3)
+ Mod{10}(5)  Mod{10}(4)  Mod{10}(5)  Mod{10}(9)  Mod{10}(0)
+
+julia> detx(A)
+┌ Warning: Using cofactor expansion to calcuate determinant; may be very slow.
+└ @ LinearAlgebraX ~/.julia/dev/LinearAlgebraX/src/detx.jl:41
+Mod{10}(4)
+```
+
+
+
+
 #### Nullspace
 
 ```julia
