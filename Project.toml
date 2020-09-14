@@ -9,7 +9,7 @@ Mods = "7475f97c-0381-53b1-977b-4c60186c8d62"
 
 [compat]
 julia = "1"
-SimplePolynomials = "0"
+SimplePolynomials = "0.0.1, 0.0.2, 0.0.3, 0.0.4, 0.0.5, 0.0.6, 0.1, 0.2"
 Mods = "1"
 
 [extras]
