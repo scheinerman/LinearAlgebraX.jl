@@ -3,16 +3,16 @@ using LinearAlgebra, SimplePolynomials, Mods
 
 
 # IntegerX is any sort of real or Gaussian integer
-IntegerX = Union{S,Complex{S}} where S<:Integer
+IntegerX = Union{S,Complex{S}} where {S<:Integer}
 
 # RationalX is a Rational or Complex Rational based on integers
-RationalX = Union{Rational{S},Complex{Rational{S}}} where S<:Integer
+RationalX = Union{Rational{S},Complex{Rational{S}}} where {S<:Integer}
 
-TypeX = Union{IntegerX, RationalX, AbstractMod}
+TypeX = Union{IntegerX,RationalX,AbstractMod}
 
 
-function _recip(x::T) where T <: IntegerX
-    return 1//x
+function _recip(x::T) where {T<:IntegerX}
+    return 1 // x
 end
 _recip(x) = inv(x)
 
