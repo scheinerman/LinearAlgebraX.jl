@@ -62,4 +62,7 @@ end
 
     A = A - eye(Int, 6)
     @test permanent(A) == 265  # number of derangements of [6]
+
+    A = triu(ones(5, 5))
+    @test permanent(A) == 1
 end
