@@ -1,5 +1,5 @@
 module LinearAlgebraX
-using LinearAlgebra, SimplePolynomials, Mods
+using LinearAlgebra, SimplePolynomials, Mods, Permutations
 
 
 # IntegerX is any sort of real or Gaussian integer
@@ -26,6 +26,7 @@ include("rankx.jl")
 include("nullspacex.jl")
 include("char_poly.jl")
 include("homogeneous.jl")
+include("perm.jl")
 
 
 end # module

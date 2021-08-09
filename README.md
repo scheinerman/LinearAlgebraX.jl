@@ -26,6 +26,7 @@ For exact types (such as `Int`s) these functions give exact results.
 * `rrefx` -- row reduced echelon form
 * `eye` -- lovingly restored
 * `char_poly` -- characteristic polynomial
+* `permanent` -- permanent of a square matrix
 
 ## Examples
 

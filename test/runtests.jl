@@ -44,14 +44,22 @@ end
 end
 
 
-@testset "Homogeneous" begin 
-    v = HVector(2,3,2)
-    @test v[2] == 3//2
-    @test dot(v,v)==1
-    w = HVector(20,30,20)
-    @test v==w 
+@testset "Homogeneous" begin
+    v = HVector(2, 3, 2)
+    @test v[2] == 3 // 2
+    @test dot(v, v) == 1
+    w = HVector(20, 30, 20)
+    @test v == w
 
-    A = rand(Int,3,3) .% 20
-    w = A*v
-    @test w == HVector(A*v.data)
+    A = rand(Int, 3, 3) .% 20
+    w = A * v
+    @test w == HVector(A * v.data)
+end
+
+@testset "Permanent" begin
+    A = ones(Int, 6, 6)
+    @test permanent(A) == factorial(6)
+
+    A = A - eye(Int, 6)
+    @test permanent(A) == 265  # number of derangements of [6]
 end

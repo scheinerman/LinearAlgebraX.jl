@@ -1,16 +1,18 @@
 name = "LinearAlgebraX"
 uuid = "9b3f67b0-2d00-526e-9884-9e4938f8fb88"
-version = "0.1.8"
+version = "0.1.9"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 SimplePolynomials = "cc47b68c-3164-5771-a705-2bc0097375a0"
 Mods = "7475f97c-0381-53b1-977b-4c60186c8d62"
+Permutations = "2ae35dd2-176d-5d53-8349-f30d82d94d4f"
 
 [compat]
 julia = "1"
 SimplePolynomials = "0.0.1, 0.0.2, 0.0.3, 0.0.4, 0.0.5, 0.0.6, 0.1, 0.2"
 Mods = "1"
+Permutations = "0.4"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
