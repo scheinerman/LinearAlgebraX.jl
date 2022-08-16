@@ -2,8 +2,6 @@
 
 
 
-[![Build Status](https://travis-ci.com/scheinerman/LinearAlgebraX.jl.svg?branch=master)](https://travis-ci.com/scheinerman/LinearAlgebraX.jl)
-
 
 This module implements basic linear algebra methods for matrices
 with exact entries (e.g., `Rational{Int}` values).  The function names
