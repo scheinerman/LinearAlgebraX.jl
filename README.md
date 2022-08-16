@@ -32,7 +32,7 @@ For exact types (such as `Int`s) these functions give exact results.
 
 #### Determinant
 
-```julia
+```
 julia> A = ones(Int,10,10)+eye(Int,10);
 
 julia> det(A)
@@ -54,7 +54,9 @@ For certain `Mod` matrices, there may be noninvertible nonzero elements in which
 case the Gaussian elimination algorithm may fail. If that happens, `detx` 
 falls back to using cofactor expansion which may be very slow. Should that 
 happen, a warning is generated.
-```julia
+```
+julia> using Mods
+
 julia> A = rand(Mod{10},5,5)
 5×5 Array{Mod{10},2}:
  Mod{10}(6)  Mod{10}(1)  Mod{10}(8)  Mod{10}(7)  Mod{10}(9)
@@ -74,7 +76,7 @@ Mod{10}(4)
 
 #### Nullspace
 
-```julia
+```
 julia> A = reshape(collect(1:12),3,4)
 3×4 Array{Int64,2}:
  1  4  7  10
@@ -99,7 +101,7 @@ julia> nullspace(A)
 #### Rank
 
 Consider the 12-by-12 Hibert matrix, `H` (see `hilbert.jl` in the `extras` folder):
-```julia
+```
 12×12 Array{Rational{Int64},2}:
  1//1   1//2   1//3   1//4   1//5   1//6   1//7   1//8   1//9   1//10  1//11  1//12
  1//2   1//3   1//4   1//5   1//6   1//7   1//8   1//9   1//10  1//11  1//12  1//13
@@ -116,7 +118,7 @@ Consider the 12-by-12 Hibert matrix, `H` (see `hilbert.jl` in the `extras` folde
 ```
 We compare the results of `rank` (from the `LinearAlgebra` module) and
 `rankx` (in this module):
-```julia
+```
 julia> rank(H)
 11
 
@@ -126,7 +128,7 @@ julia> rankx(H)
 
 #### Inverse
 
-```julia
+```
 julia> using Mods
 
 julia> A = rand(Mod{11},5,5)
@@ -156,7 +158,7 @@ julia> A*B
 
  #### Characteristic polynomial
 
-```julia
+```
 julia> using SimplePolynomials, LinearAlgebra
 
 julia> x = getx()
@@ -194,7 +196,7 @@ Mod{17}(1)
 
  #### Row reduced echelon form
 
- ```julia
+ ```
  julia> A = rand(Int,4,6) .% 10
 4×6 Array{Int64,2}:
  6   8  0  -6  -5   4
@@ -237,7 +239,7 @@ julia> rrefx(A)
 
  To create an `HVector` provide either a list (one-dimensional array) of values 
  or a list of arguments:
- ```julia
+ ```
  julia> v = HVector([1,-2,3])
 HVector(1//3, -2//3, 1//1)
 
@@ -250,7 +252,7 @@ true
 
 Entries in an `HVector` can be retrieved individually, or the entire vector can 
 be converted to an array:
-```julia
+```
 julia> v[2]
 -2//3
 
@@ -261,7 +263,7 @@ julia> Vector(v)
   1//1
 ```
 However, entries cannot be assigned:
-```julia
+```
 ulia> v[2] = 3//4
 ERROR: MethodError: no method matching setindex!(::HVector{Rational{Int64}}, ::Rational{Int64}, ::Int64)
 ```
@@ -269,7 +271,7 @@ ERROR: MethodError: no method matching setindex!(::HVector{Rational{Int64}}, ::R
 ### Operations for `HVector`s
 
 The product of a matrix and a homogeneous vector is a homogeneous vector:
-```julia
+```
 julia> A = rand(Int,3,3) .% 5
 3×3 Array{Int64,2}:
  -1   0   0
@@ -290,7 +292,7 @@ The dot product of two homogeneous vectors is a scalar. Since homogeneous vector
 are unchanged by scaling, we only distinguish between zero and nonzero results.
 Specifically, the dot product is `0` if the two vectors are orthogonal and 
 `1` otherwise. 
-```julia
+```
 julia> using Mods
 
 julia> u = Mod{3}(1)
@@ -314,7 +316,7 @@ julia> dot(v,w)
 
 We also provide `HMatrix` to represent a homogeneous matrix. These are 
 constructed by passing an (ordinary) matrix.
-```julia
+```
 julia> A = rand(Int,3,3).%5
 3×3 Array{Int64,2}:
  0  -4   3
