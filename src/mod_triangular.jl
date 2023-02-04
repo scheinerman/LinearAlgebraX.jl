@@ -36,7 +36,6 @@ function upper_triangular!(M::AbstractMatrix{Mod{N, T}}, prime_powers::Union{Not
                 else
                     RowSmith{R}(i, j, smith_coeff(M[i,i], M[j,i], prime_powers)[:]...)
                 end
-                @show op
                 push!(ops, op)
                 apply_matrix_operation!(M, op)
             end

@@ -103,7 +103,6 @@ function smith_coeff(a::Mod{N, T}, b::Mod{N, T}, prime_powers::Union{Nothing, Ve
 end
 
 function smith_coeff(T, a::Integer, b::Integer, prime_powers::Vector{<:Integer}, N::Integer)
-    # @show prime_powers
     as = a .% prime_powers
     bs = b .% prime_powers
     zas = iszero.(as)
@@ -113,23 +112,18 @@ function smith_coeff(T, a::Integer, b::Integer, prime_powers::Vector{<:Integer},
     zabs = zas .* zbs
     as = as + zas .* bs
     bs = bs + zbs .* as
-    # @show zabs
-    # @show as, bs
     pas = gcd.(as, prime_powers)
     pbs = gcd.(bs, prime_powers)
     cas = as .÷ pas
     cbs = bs .÷ pbs
     pas = pas .* ((!).(zabs))
     pbs = pbs .* ((!).(zabs))
-    # @show pas, pbs
     cas = cas + zabs
     cbs = cbs + zabs
-    # @show cas, cbs
     @assert cas .* pas == as
     @assert cbs .* pbs == bs
     ca = Mod{N, T}(CRT(BigInt, cas, prime_powers))
     cb = Mod{N, T}(CRT(BigInt, cbs, prime_powers))
-    # @show ca, cb
     αs = pbs .÷ (pas + zabs)
     βs = pas .÷ (pbs + zabs)
     γs = iszero.(αs)
@@ -146,7 +140,6 @@ function smith_coeff(T, a::Integer, b::Integer, prime_powers::Vector{<:Integer},
     M = M_minus_γ * M_plus_γ * M_β * M_α * M_inv_ca_cb * M_zb * M_za
     res = Mod{N, T}[a; b]
     res = M * res
-    # @show res
     @assert iszero(res[2])
     return M
 end

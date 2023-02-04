@@ -69,11 +69,10 @@ end
 
 @testset "Smith Normal Form" begin
     A = rand(Mod{30}, 5, 5)
-    @show A
     S, U, V = smith_normal_form(A)
     @test S == U * A * V
-    @show S
     @test isdiag(S)
+    @test all(LinearAlgebraX.divisible(S[i,i], S[i+1,i+1]) for i in 1:4)
 
     B = rand(Mod{30}, 3, 3)
     det_B = B[1,1]*B[2,2]*B[3,3] + B[1,2]*B[2,3]*B[3,1] + B[1,3]*B[2,1]*B[3,2] -
