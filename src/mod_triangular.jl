@@ -20,7 +20,7 @@ function upper_triangular!(M::AbstractMatrix{Mod{N, T}}, prime_powers::Union{Not
         if iszero(M[i,i])
             for j = i+1:m
                 if !iszero(M[j,i])
-                    op = RowSWAP{R}(i, j)
+                    op = RowSwap{R}(i, j)
                     push!(ops, op)
                     apply_matrix_operation!(M, op)
                     break
@@ -63,7 +63,7 @@ function lower_triangular!(M::AbstractMatrix{Mod{N, T}}, prime_powers::Union{Not
         if iszero(M[i,i])
             for j = i+1:n
                 if !iszero(M[i,j])
-                    op = ColumnSWAP{R}(i, j)
+                    op = ColumnSwap{R}(i, j)
                     push!(ops, op)
                     apply_matrix_operation!(M, op)
                     break

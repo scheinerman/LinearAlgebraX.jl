@@ -4,7 +4,7 @@ export smith_normal_form
 abstract type AbstractMatrixOperation{R} end
 abstract type AbstractRowOperation{R} <: AbstractMatrixOperation{R} end
 abstract type AbstractColumnOperation{R} <: AbstractMatrixOperation{R} end
-struct RowSWAP{R} <: AbstractRowOperation{R}
+struct RowSwap{R} <: AbstractRowOperation{R}
     i::Int
     j::Int
 end
@@ -25,7 +25,7 @@ struct RowSmith{R} <: AbstractRowOperation{R}
     t::R
     v::R
 end
-struct ColumnSWAP{R} <: AbstractColumnOperation{R}
+struct ColumnSwap{R} <: AbstractColumnOperation{R}
     i::Int
     j::Int
 end
@@ -47,18 +47,18 @@ struct ColumnSmith{R} <: AbstractColumnOperation{R}
     v::R
 end
 
-detx(op::RowSWAP{R}) where {R} = (op.i == op.j) ? one(R) : -one(R)
+detx(op::RowSwap{R}) where {R} = (op.i == op.j) ? one(R) : -one(R)
 detx(::RowAddMult{R}) where {R} = one(R)
 detx(op::RowScale{R}) where {R} = op.u
 detx(op::RowSmith{R}) where {R} = op.s * op.v - op.u * op.t
-detx(op::ColumnSWAP{R}) where {R} = (op.i == op.j) ? one(R) : -one(R)
+detx(op::ColumnSwap{R}) where {R} = (op.i == op.j) ? one(R) : -one(R)
 detx(::ColumnAddMult{R}) where {R} = one(R)
 detx(op::ColumnScale{R}) where {R} = op.u
 detx(op::ColumnSmith{R}) where {R} = op.s * op.v - op.u * op.t
 
 (r::AbstractMatrixOperation{R})(M::AbstractMatrix{R}) where R = apply_matrix_operation!(M, r)
 
-function apply_matrix_operation!(M::AbstractMatrix{R}, op::RowSWAP{R}) where {R}
+function apply_matrix_operation!(M::AbstractMatrix{R}, op::RowSwap{R}) where {R}
     M[op.i,:], M[op.j,:] = M[op.j,:], M[op.i,:]
     return M
 end
@@ -74,7 +74,7 @@ function apply_matrix_operation!(M::AbstractMatrix{R}, op::RowSmith{R}) where {R
     M[[op.i, op.j],:] = [op.s op.t; op.u op.v] * M[[op.i, op.j],:]
     return M
 end
-function apply_matrix_operation!(M::AbstractMatrix{R}, op::ColumnSWAP{R}) where {R}
+function apply_matrix_operation!(M::AbstractMatrix{R}, op::ColumnSwap{R}) where {R}
     M[:,op.i], M[:,op.j] = M[:,op.j], M[:,op.i]
     return M
 end
@@ -239,7 +239,7 @@ function smith_elimination!(M::AbstractMatrix{Mod{N, T}}, row_ops, col_ops, i, p
         if iszero(M[i,i])
             for j = i+1:m
                 if !iszero(M[j,i])
-                    op = RowSWAP{R}(i, j)
+                    op = RowSwap{R}(i, j)
                     push!(row_ops, op)
                     op(M)
                     break
@@ -264,7 +264,7 @@ function smith_elimination!(M::AbstractMatrix{Mod{N, T}}, row_ops, col_ops, i, p
         if iszero(M[i,i])
             for j = i+1:n
                 if !iszero(M[i,j])
-                    op = ColumnSWAP{R}(i, j)
+                    op = ColumnSwap{R}(i, j)
                     push!(col_ops, op)
                     op(M)
                     break
