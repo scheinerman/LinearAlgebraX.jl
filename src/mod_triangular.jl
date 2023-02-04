@@ -32,7 +32,7 @@ function upper_triangular!(M::AbstractMatrix{Mod{N, T}}, prime_powers::Union{Not
             if !iszero(M[j,i])
                 c, r = divrem(M[j,i], M[i,i], prime_powers)
                 op = if iszero(r)
-                    RowAddTo{R}(i, j, -c)
+                    RowAddMult{R}(i, j, -c)
                 else
                     RowSmith{R}(i, j, smith_coeff(M[i,i], M[j,i], prime_powers)[:]...)
                 end
@@ -75,7 +75,7 @@ function lower_triangular!(M::AbstractMatrix{Mod{N, T}}, prime_powers::Union{Not
             if !iszero(M[i,j])
                 c, r = divrem(M[i,j], M[i,i], prime_powers)
                 op = if iszero(r)
-                    ColumnAddTo{R}(i, j, -c)
+                    ColumnAddMult{R}(i, j, -c)
                 else
                     ColumnSmith{R}(i, j, smith_coeff(M[i,i], M[i,j], prime_powers)[:]...)
                 end

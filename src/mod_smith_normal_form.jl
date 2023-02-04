@@ -8,12 +8,12 @@ struct RowSWAP{R} <: AbstractRowOperation{R}
     i::Int
     j::Int
 end
-struct RowAddTo{R} <: AbstractRowOperation{R}
+struct RowAddMult{R} <: AbstractRowOperation{R}
     i::Int
     j::Int
     c::R
 end
-struct RowMultiply{R} <: AbstractRowOperation{R}
+struct RowScale{R} <: AbstractRowOperation{R}
     i::Int
     u::R
 end
@@ -29,12 +29,12 @@ struct ColumnSWAP{R} <: AbstractColumnOperation{R}
     i::Int
     j::Int
 end
-struct ColumnAddTo{R} <: AbstractColumnOperation{R}
+struct ColumnAddMult{R} <: AbstractColumnOperation{R}
     i::Int
     j::Int
     c::R
 end
-struct ColumnMultiply{R} <: AbstractColumnOperation{R}
+struct ColumnScale{R} <: AbstractColumnOperation{R}
     i::Int
     u::R
 end
@@ -48,12 +48,12 @@ struct ColumnSmith{R} <: AbstractColumnOperation{R}
 end
 
 detx(op::RowSWAP{R}) where {R} = (op.i == op.j) ? one(R) : -one(R)
-detx(::RowAddTo{R}) where {R} = one(R)
-detx(op::RowMultiply{R}) where {R} = op.u
+detx(::RowAddMult{R}) where {R} = one(R)
+detx(op::RowScale{R}) where {R} = op.u
 detx(op::RowSmith{R}) where {R} = op.s * op.v - op.u * op.t
 detx(op::ColumnSWAP{R}) where {R} = (op.i == op.j) ? one(R) : -one(R)
-detx(::ColumnAddTo{R}) where {R} = one(R)
-detx(op::ColumnMultiply{R}) where {R} = op.u
+detx(::ColumnAddMult{R}) where {R} = one(R)
+detx(op::ColumnScale{R}) where {R} = op.u
 detx(op::ColumnSmith{R}) where {R} = op.s * op.v - op.u * op.t
 
 (r::AbstractMatrixOperation{R})(M::AbstractMatrix{R}) where R = apply_matrix_operation!(M, r)
@@ -62,11 +62,11 @@ function apply_matrix_operation!(M::AbstractMatrix{R}, op::RowSWAP{R}) where {R}
     M[op.i,:], M[op.j,:] = M[op.j,:], M[op.i,:]
     return M
 end
-function apply_matrix_operation!(M::AbstractMatrix{R}, op::RowAddTo{R}) where {R}
+function apply_matrix_operation!(M::AbstractMatrix{R}, op::RowAddMult{R}) where {R}
     M[op.j,:] += op.c * M[op.i,:]
     return M
 end
-function apply_matrix_operation!(M::AbstractMatrix{R}, op::RowMultiply{R}) where {R}
+function apply_matrix_operation!(M::AbstractMatrix{R}, op::RowScale{R}) where {R}
     M[op.i,:] *= op.u
     return M
 end
@@ -78,11 +78,11 @@ function apply_matrix_operation!(M::AbstractMatrix{R}, op::ColumnSWAP{R}) where 
     M[:,op.i], M[:,op.j] = M[:,op.j], M[:,op.i]
     return M
 end
-function apply_matrix_operation!(M::AbstractMatrix{R}, op::ColumnAddTo{R}) where {R}
+function apply_matrix_operation!(M::AbstractMatrix{R}, op::ColumnAddMult{R}) where {R}
     M[:,op.j] += op.c * M[:,op.i]
     return M
 end
-function apply_matrix_operation!(M::AbstractMatrix{R}, op::ColumnMultiply{R}) where {R}
+function apply_matrix_operation!(M::AbstractMatrix{R}, op::ColumnScale{R}) where {R}
     M[:,op.i] *= op.u
     return M
 end
@@ -216,7 +216,7 @@ function smith_normal_form!(M::AbstractMatrix{Mod{N, T}}, prime_powers::Union{No
         for i = 2:min(m, n)
             if !divisible(M[i-1,i-1], M[i,i])
                 diag_normalized = false
-                op = ColumnAddTo(i, i-1, one(R))
+                op = ColumnAddMult(i, i-1, one(R))
                 push!(col_ops, op)
                 op(M)
                 smith_elimination!(M, row_ops, col_ops, i-1, prime_powers)
@@ -249,7 +249,7 @@ function smith_elimination!(M::AbstractMatrix{Mod{N, T}}, row_ops, col_ops, i, p
         for j = i+1:m
             c, r = divrem(M[j,i], M[i,i])
             if iszero(r)
-                op = RowAddTo{R}(i, j, -c)
+                op = RowAddMult{R}(i, j, -c)
                 push!(row_ops, op)
                 op(M)
             else
@@ -274,7 +274,7 @@ function smith_elimination!(M::AbstractMatrix{Mod{N, T}}, row_ops, col_ops, i, p
         for j = i+1:n
             c, r = divrem(M[i,j], M[i,i])
             if iszero(r)
-                op = ColumnAddTo{R}(i, j, -c)
+                op = ColumnAddMult{R}(i, j, -c)
                 push!(col_ops, op)
                 op(M)
             else
