@@ -66,3 +66,34 @@ end
     A = triu(ones(5, 5))
     @test permanent(A) == 1
 end
+
+@testset "Smith Normal Form" begin
+    A = rand(Mod{30}, 5, 5)
+    @show A
+    S, U, V = smith_normal_form(A)
+    @test S == U * A * V
+    @show S
+    @test isdiag(S)
+
+    B = rand(Mod{30}, 3, 3)
+    det_B = B[1,1]*B[2,2]*B[3,3] + B[1,2]*B[2,3]*B[3,1] + B[1,3]*B[2,1]*B[3,2] -
+            B[1,3]*B[2,2]*B[3,1] - B[1,1]*B[2,3]*B[3,2] - B[1,2]*B[2,1]*B[3,3]
+    smith_normal_form(B)
+    @test det_B == detx(B)
+end
+
+@testset "Triangular" begin
+    function det_lower_triangular(A::AbstractMatrix{T}) where {T<:AbstractMod}
+        L, col_ops = LinearAlgebraX.lower_triangular!(copy(A))
+        det_C = prod(detx(op) for op in col_ops)
+        # L = A * C
+        return prod(diag(L)) * inv(det_C)
+    end
+    
+    A = rand(Mod{30}, 5, 5)
+    @test detx(A) == det_lower_triangular(A)
+    U, C = upper_triangular(A)
+    @test U == C * A
+    L, D = lower_triangular(A)
+    @test L == A * D
+end
