@@ -28,7 +28,7 @@ end
 function detx(A::AbstractMatrix{T}) where {T}
     # @info "Using detx! on matrix of type $T"
     r, c = size(A)
-    B = Matrix{Any}(undef, r, c)
+    B = Matrix{T}(undef, r, c)
     for i = 1:r
         for j = 1:c
             B[i, j] = A[i, j]
@@ -88,4 +88,12 @@ function detx!(A::AbstractMatrix{T}) where {T}
 
     return detx!(A[2:end, 2:end]) * factor
 
+end
+
+function detx!(A::AbstractMatrix{<:Mod})
+    U, row_ops = upper_triangular!(A)
+    det_C = prod(detx(op) for op in row_ops)
+
+    # U = C * A
+    return inv(det_C) * prod(diag(U))
 end
