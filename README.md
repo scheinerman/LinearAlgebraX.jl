@@ -64,7 +64,7 @@ julia> A = rand(Mod{10},5,5)
  Mod{10}(5)  Mod{10}(4)  Mod{10}(5)  Mod{10}(9)  Mod{10}(0)
 
 julia> detx(A)
-┌ Warning: Using cofactor expansion to calcuate determinant; may be very slow.
+┌ Warning: Using cofactor expansion to calculate determinant; may be very slow.
 └ @ LinearAlgebraX ~/.julia/dev/LinearAlgebraX/src/detx.jl:41
 Mod{10}(4)
 ```
