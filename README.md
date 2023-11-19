@@ -239,10 +239,10 @@ julia> rrefx(A)
  or a list of arguments:
  ```
  julia> v = HVector([1,-2,3])
-HVector(1//3, -2//3, 1//1)
+[1//3 : -2//3 : 1//1]
 
 julia> w = HVector(2,-4,6)
-HVector(1//3, -2//3, 1//1)
+[1//3 : -2//3 : 1//1]
 
 julia> v==w
 true
@@ -277,7 +277,7 @@ julia> A = rand(Int,3,3) .% 5
   3  -1  -2
 
 julia> A*v
-HVector(1//1, 3//1, 1//1)
+[1//1 : 3//1 : 1//1]
 
 julia> A*Vector(v)
 3-element Array{Rational{Int64},1}:
@@ -297,20 +297,20 @@ julia> u = Mod{3}(1)
 Mod{3}(1)
 
 julia> v = HVector(u,u,u)
-HVector(Mod{3}(1), Mod{3}(1), Mod{3}(1))
+[Mod{3}(1) : Mod{3}(1) : Mod{3}(1)]
 
 julia> dot(v,v)
 0
 
 julia> w = HVector(-1,2,1)
-HVector(-1//1, 2//1, 1//1)
+[-1//1 : 2//1 : 1//1]
 
 julia> dot(v,w)
 1
 ```
 
 
-### Homogeneous matrices
+## Homogeneous Matrices
 
 We also provide `HMatrix` to represent a homogeneous matrix. These are 
 constructed by passing an (ordinary) matrix.
