@@ -64,6 +64,8 @@ iszero(x::HObject) = iszero(x.data)
 
 
 """
+    dot(x::HVector, y::HVector)::Int
+
 The `dot` produce of two `HVector`s is either `0` 
 (if they are orthogonal) or `1` (otherwise).
 """
@@ -75,15 +77,29 @@ function dot(x::HVector, y::HVector)::Int
     return 1
 end
 
+# OLD VERSION
+#
+# function show(io::IO, x::HVector)
+#     print(io, "HVector(")
+#     n = length(x.data)
+#     for j = 1:n-1
+#         print(io, "$(x.data[j]), ")
+#     end
+#     print(io, x.data[end], ")")
+# end
 
 function show(io::IO, x::HVector)
-    print(io, "HVector(")
+    print(io, "[")
     n = length(x.data)
     for j = 1:n-1
-        print(io, "$(x.data[j]), ")
+        print(io, "$(x.data[j]) : ")
     end
-    print(io, x.data[end], ")")
+    print(io, x.data[end], "]")
 end
+
+
+
+
 
 function show(io::IO, x::HMatrix)
     print(io, "HMatrix: ")
