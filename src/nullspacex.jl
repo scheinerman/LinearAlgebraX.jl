@@ -1,6 +1,8 @@
 export nullspacex
 
 """
+    nullspacex(A::AbstractMatrix{T}) where {T}
+
 `nullspacex(A)` returns an exact basis for the matrix `A`
 """
 function nullspacex(A::AbstractMatrix{T}) where {T}
