@@ -55,7 +55,7 @@ function detx!(A::AbstractMatrix{T}) where {T}
 
 
     if r == 0
-        return 1
+        return one(T)
     end
 
     if r == 1
@@ -68,12 +68,12 @@ function detx!(A::AbstractMatrix{T}) where {T}
 
     col = A[:, 1]  # first column
     if all(col .== 0)
-        return 0
+        return zero(T)
     end
 
     k = findfirst(col .!= 0)  # we pivot here
 
-    sign_factor = 1
+    sign_factor = one(Int8)
     if k > 1
         sign_factor = -sign_factor
         row_swap!(A, 1, k)
