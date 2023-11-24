@@ -28,15 +28,7 @@ function detx(A::AbstractMatrix{T}) where {T<:RationalX}
 end
 
 function detx(A::AbstractMatrix{T}) where {T}
-    # @info "Using detx! on matrix of type $T"
-    r, c = size(A)
-    B = Matrix{T}(undef, r, c)
-    for i = 1:r
-        for j = 1:c
-            B[i, j] = A[i, j]
-        end
-    end
-    # B = copy(A)
+    B = collect(A)
     try
         return detx!(B)
     catch
