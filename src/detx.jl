@@ -38,7 +38,7 @@ function detx(A::AbstractMatrix{T}) where {T}
     end
     # B = copy(A)
     try
-        return detx!(B)
+        return detx!(@view B[:, :])
     catch
         @warn "Using cofactor expansion to calculate determinant; may be very slow."
         return cofactor_det(B)  # if all else fails!
@@ -88,7 +88,7 @@ function detx!(A::AbstractMatrix{T}) where {T}
     end
 
 
-    return detx!(A[2:end, 2:end]) * factor
+    return detx!(@view A[2:end, 2:end]) * factor
 
 end
 
