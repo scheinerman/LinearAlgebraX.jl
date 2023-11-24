@@ -9,22 +9,11 @@ Here `T` can be any kind of integer, rational, `Mod`, or `GF2`.
 I hope to expand this to `Polynomial`s.
 """
 function detx(A::AbstractMatrix{T}) where {T<:IntegerX}
-    # @info "Using IntegerX detx{$T}"
-    try
-        return T(det(A // 1))
-    catch
-        A = big.(A)
-        return detx(A)
-    end
+    det(A // true)
 end
 
 function detx(A::AbstractMatrix{T}) where {T<:RationalX}
-    # @info "Using RationalX detx{$T}"
-    try
-        return det(A)
-    catch
-        return det(big.(A))
-    end
+    det(A)
 end
 
 function detx(A::AbstractMatrix{T}) where {T}
