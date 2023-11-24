@@ -17,8 +17,8 @@ function cofactor_det(A::AbstractMatrix{T}) where {T}
         return A[1, 1]
     end
 
-    total = 0 * A[1, 1]
-    sign = -1
+    total = zero(T)*one(Int8)
+    sign = -one(Int8)
     for i = 1:r
         a = A[i, 1]
         sign = -sign
