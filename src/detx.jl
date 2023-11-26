@@ -50,9 +50,7 @@ end
 # it can modify the matrix so this is not exposed to the general public.
 
 function detx!(A::AbstractMatrix{T}) where {T}
-    r, c = size(A)
-    @assert r == c "Matrix must be square"
-
+    r = LinearAlgebra.checksquare(A)
 
     if r == 0
         return 1
