@@ -67,7 +67,7 @@ end
 
 function incidence_hypergraph(p::Int)::HyperGraph
     VV = generate_points(p)
-    H = HyperGraph{HVector{Mod{p}}}()
+    H = HyperGraph{HVector{Mod{p,Int}}}()
     for v in VV
         add!(H,v)
     end 
