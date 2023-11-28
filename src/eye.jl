@@ -12,14 +12,4 @@ function eye(T, n)::Matrix
     return Matrix{T}(I, n, n)
 end
 
-# OLD VERSION
-#
-# function eye(T, n)
-#     A = zeros(T, n, n)
-#     for j = 1:n
-#         @inbounds A[j, j] = one(T)
-#     end
-#     return A
-# end
-
 eye(n) = eye(Float64, n)

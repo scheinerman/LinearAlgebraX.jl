@@ -10,10 +10,11 @@ Here `T` can be any kind of integer, rational, or `Mod`.
 """
 function detx(A::AbstractMatrix{T}) where {T<:Union{IntegerX,RationalX}}
     A = big.(A)
-    return det(A)
+    TT = typeof(A[1, 1])
+    return TT(det(A // 1))
 end
 
-function detx(A::AbstractMatrix{T})::T where T<:Mod
+function detx(A::AbstractMatrix{T})::T where {T<:Mod}
     try
         return det(A)
     catch

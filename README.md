@@ -5,7 +5,8 @@ with exact entries (e.g., `Rational{Int}` values).  The function names
 typically match the standard ones in Julia but with an `x` (for "exact")
 appended.
 
-The functions in this module work for all types of `Integer`, `Rational`, and `Mod`
+The functions in this module work for all types of 
+`Integer`, `Rational`, `Complex{Integer}`, `Complex{Rational}`, and `Mod`
 entries in matrices. Other exact numbers may work as well, but are not tested. 
 
 As the goal of this module is always to give exact answers and, at the same time,
