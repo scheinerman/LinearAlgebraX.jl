@@ -43,6 +43,21 @@ end
     @test rankx(A) <= 20
 end
 
+@testset "Complex" begin
+    A = rand(Int, 5, 5) .% 100
+    B = rand(Int, 5, 5) .% 100
+    M = A + im * B
+    @test detx(M) == cofactor_det(M)
+
+    @test detx(M') == conj(detx(M))
+
+
+    MM = invx(M)
+    @test M * MM == eye(Complex{BigInt}, 5)
+
+    @test permanent(M') == permanent(M)'
+end
+
 
 @testset "Homogeneous" begin
     v = HVector(2, 3, 2)
@@ -88,7 +103,7 @@ end
 #         # L = A * C
 #         return prod(diag(L)) * inv(det_C)
 #     end
-    
+
 #     A = rand(Mod{30}, 5, 5)
 #     @test detx(A) == det_lower_triangular(A)
 #     U, C = upper_triangular(A)
