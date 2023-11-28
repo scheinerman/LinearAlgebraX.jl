@@ -7,6 +7,17 @@ export invx
 
 `invx(A)` for a matrix `A` gives an exact matrix inverse.
 """
+function invx(A::AbstractMatrix{T})::Matrix{Rational{BigInt}} where {T<:Union{IntegerX,RationalX}}
+    return inv(big.(A) // 1)
+end
+
+function invx(A::AbstractMatrix{T})::Matrix{T} where {T<:Mod}
+    return inv(A)
+end
+
+
+
+
 function invx(A::AbstractMatrix{T}) where {T}
     r, c = size(A)
     @assert r == c "Matrix must be square"

@@ -16,10 +16,10 @@ These functions in this module end with the letter `x`
 and have the same definitions as their counterparts that do not have an `x`.
 For exact types (such as `Int`s) these functions give exact results.
 
-* `detx` -- exact determinant (via row reduced echelon form)
+* `detx` -- exact determinant 
 * `cofactor_det`-- slower exact determinant (via cofactor expansion)
 * `nullspacex` -- exact nullspace
-* `rankx` -- exact rankx
+* `rankx` -- exact rank
 * `invx` -- exact inverse
 * `rrefx` -- row reduced echelon form
 * `eye` -- lovingly restored

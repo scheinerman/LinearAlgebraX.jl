@@ -81,18 +81,18 @@ end
 #     @test det_B == detx(B)
 # end
 
-@testset "Triangular" begin
-    function det_lower_triangular(A::AbstractMatrix{T}) where {T<:AbstractMod}
-        L, col_ops = LinearAlgebraX.lower_triangular!(copy(A))
-        det_C = prod(detx(op) for op in col_ops)
-        # L = A * C
-        return prod(diag(L)) * inv(det_C)
-    end
+# @testset "Triangular" begin
+#     function det_lower_triangular(A::AbstractMatrix{T}) where {T<:AbstractMod}
+#         L, col_ops = LinearAlgebraX.lower_triangular!(copy(A))
+#         det_C = prod(detx(op) for op in col_ops)
+#         # L = A * C
+#         return prod(diag(L)) * inv(det_C)
+#     end
     
-    A = rand(Mod{30}, 5, 5)
-    @test detx(A) == det_lower_triangular(A)
-    U, C = upper_triangular(A)
-    @test U == C * A
-    L, D = lower_triangular(A)
-    @test L == A * D
-end
+#     A = rand(Mod{30}, 5, 5)
+#     @test detx(A) == det_lower_triangular(A)
+#     U, C = upper_triangular(A)
+#     @test U == C * A
+#     L, D = lower_triangular(A)
+#     @test L == A * D
+# end

@@ -28,6 +28,6 @@ include("char_poly.jl")
 include("homogeneous.jl")
 include("perm.jl")
 # include("mod_smith_normal_form.jl")
-include("mod_triangular.jl")
+# include("mod_triangular.jl")
 
 end # module

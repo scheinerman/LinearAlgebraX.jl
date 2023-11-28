@@ -5,7 +5,16 @@ export permanent
 Compute the permanent of the square matrix `A`. Works best if `A`
 is relatively sparse. For a dense matrix, this will be slow.
 """
-function permanent(A::Matrix{T}) where {T<:Number}
+function permanent(A::Matrix{T}) where {T<:Union{IntegerX,RationalX}}
+    A = big.(A)
+    return perm_work(A)
+end
+
+function permanent(A::Matrix{T})::T where {T}
+    perm_work(A)
+end
+
+function perm_work(A::Matrix{T}) where {T}
     r, c = size(A)
     if r != c
         error("Matrix must be square")

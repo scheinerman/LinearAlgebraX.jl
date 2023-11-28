@@ -1,5 +1,7 @@
 export detx
 
+cofactor_warning = "Using cofactor expansion to calculate determinant; may be very slow."
+
 """
     detx(A::AbstractMatrix{T}) where {T<:IntegerX}
 
@@ -11,19 +13,23 @@ function detx(A::AbstractMatrix{T}) where {T<:Union{IntegerX,RationalX}}
     return det(A)
 end
 
+function detx(A::AbstractMatrix{T})::T where T<:Mod
+    try
+        return det(A)
+    catch
+        @info cofactor_warning
+        return cofactor_det(A)
+    end
 
+end
 
-
-
-
-
-
+# Everything else
 function detx(A::AbstractMatrix{T})::T where {T}
     B = collect(A)
     try
         return detx!(B)
     catch
-        @info "Using cofactor expansion to calculate determinant; may be very slow."
+        @info cofactor_warning
         return cofactor_det(B)  # if all else fails!
     end
 end

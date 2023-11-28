@@ -58,16 +58,16 @@ end
 `incidence_graph(p::Int)` creates the bipartite point-line 
 incidence graph of a finite projective plane of prime order `p`.
 """
-function incidence_graph(p::Int)::SimpleGraph{Int}
+function incidence_graph(p::Int)::UndirectedGraph{Int}
     M = incidence_matrix(p)
     r,c = size(M)
     A = [ zeros(r,c)  M; copy(M')  zeros(r,c) ]
-    G = SimpleGraph(A)
+    G = UndirectedGraph(A)
 end 
 
-function incidence_hypergraph(p::Int)::SimpleHypergraph
+function incidence_hypergraph(p::Int)::HyperGraph
     VV = generate_points(p)
-    H = SimpleHypergraph{HVector{Mod{p}}}()
+    H = HyperGraph{HVector{Mod{p}}}()
     for v in VV
         add!(H,v)
     end 
