@@ -4,35 +4,26 @@ export detx
     detx(A::AbstractMatrix{T}) where {T<:IntegerX}
 
 `detx(A::AbstractMatrix{T})` is an exact determinant of the matrix.
-Here `T` can be any kind of integer, rational, `Mod`, or `GF2`.
-
-I hope to expand this to `Polynomial`s.
+Here `T` can be any kind of integer, rational, or `Mod`.
 """
-function detx(A::AbstractMatrix{T}) where {T<:IntegerX}
-    # @info "Using IntegerX detx{$T}"
-    try
-        return T(det(A // 1))
-    catch
-        A = big.(A)
-        return detx(A)
-    end
+function detx(A::AbstractMatrix{T}) where {T<:Union{IntegerX,RationalX}}
+    A = big.(A)
+    return det(A)
 end
 
-function detx(A::AbstractMatrix{T}) where {T<:RationalX}
-    # @info "Using RationalX detx{$T}"
-    try
-        return det(A)
-    catch
-        return det(big.(A))
-    end
-end
 
-function detx(A::AbstractMatrix{T}) where {T}
+
+
+
+
+
+
+function detx(A::AbstractMatrix{T})::T where {T}
     B = collect(A)
     try
         return detx!(B)
     catch
-        @warn "Using cofactor expansion to calculate determinant; may be very slow."
+        @info "Using cofactor expansion to calculate determinant; may be very slow."
         return cofactor_det(B)  # if all else fails!
     end
 end
@@ -41,7 +32,7 @@ end
 # detx! is the work behind det when we can't use Julia's det.
 # it can modify the matrix so this is not exposed to the general public.
 
-function detx!(A::AbstractMatrix{T}) where {T}
+function detx!(A::AbstractMatrix{T})::T where {T}
     r = LinearAlgebra.checksquare(A)
 
     if r == 0

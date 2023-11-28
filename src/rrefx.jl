@@ -6,9 +6,9 @@ export rrefx
 `rref(A)`  returns the row-reduced echelon form of the exact 
 matrix `A`.
 """
-function rrefx(A::AbstractMatrix{T}) where {T<:IntegerX}
+function rrefx(A::AbstractMatrix{T}) where {T<:Union{RationalX,IntegerX}}
     AA = big.(A // 1)
-    return rrefx(AA)
+    return rrefx!(AA)
 end
 
 function rrefx(A::AbstractMatrix{T}) where {T}
@@ -48,6 +48,6 @@ function rrefx!(A::AbstractMatrix{T}) where {T}
         _pivot!(A, r, j)
         r += 1
     end
-
+    return A
 
 end
