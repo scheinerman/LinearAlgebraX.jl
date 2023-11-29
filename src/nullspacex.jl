@@ -1,11 +1,12 @@
 export nullspacex
 
 """
-    nullspacex(A::AbstractMatrix{T}) where {T}
-
-`nullspacex(A)` returns an exact basis for the matrix `A`
+`nullspacex(A)` returns an exact basis for the nullspace of the matrix `A`
 """
-function nullspacex(A::AbstractMatrix{T}) where {T}
+nullspacex(A::AbstractMatrix{T}) where T = _nullspacex(A)
+
+
+function _nullspacex(A::AbstractMatrix{T}) where {T}
     r, c = size(A)
     B = rrefx(A)
 
@@ -41,4 +42,9 @@ end
 
 function nullspacex(A::AbstractMatrix{T}) where {T<:IntegerX}
     return nullspacex(big.(A) // 1)
+end
+
+function nullspacex(A::AbstractMatrix{T}) where T<:AbstractAlgebraicFunction
+    A = SimpleRationalFunction.(A)
+    return _nullspacex(A)
 end
