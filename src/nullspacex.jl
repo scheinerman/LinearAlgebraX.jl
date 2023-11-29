@@ -3,7 +3,7 @@ export nullspacex
 """
 `nullspacex(A)` returns an exact basis for the nullspace of the matrix `A`
 """
-nullspacex(A::AbstractMatrix{T}) where T = _nullspacex(A)
+nullspacex(A::AbstractMatrix{T}) where {T} = _nullspacex(A)
 
 
 function _nullspacex(A::AbstractMatrix{T}) where {T}
@@ -44,7 +44,19 @@ function nullspacex(A::AbstractMatrix{T}) where {T<:IntegerX}
     return nullspacex(big.(A) // 1)
 end
 
-function nullspacex(A::AbstractMatrix{T}) where T<:AbstractAlgebraicFunction
+function nullspacex(A::AbstractMatrix{T}) where {T<:AbstractAlgebraicFunction}
     A = SimpleRationalFunction.(A)
     return _nullspacex(A)
 end
+
+"""
+    nullityx(A::AbstractMatrix{T})::Int where {T}
+
+Return the nullity of the matrix `A`.
+"""
+function nullityx(A::AbstractMatrix{T})::Int where {T}
+    NS = nullspacex(A)
+    r, c = size(NS)
+    return c
+end
+export nullityx
