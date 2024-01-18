@@ -14,7 +14,7 @@ of a finite projective plane of order `p`.
 * `incidence_hypergraph(p)` generates a hypergraph whose vertices are the 
 points of an order-`p` projective plane and whose hyperedges are the lines 
 of that plane. 
-```julia
+```
 julia> include("extras/projective.jl")
 incidence_graph
 
@@ -44,7 +44,7 @@ SimpleHypergraph{HVector{Mod{3}}} (n=13, m=13)
 ## Hilbert matrices
 
 The file `hilbert.jl` contains code to generate Hilbert matrices.
-```julia
+```
 julia> hilbert(4)
 4×4 Array{Rational{Int64},2}:
  1//1  1//2  1//3  1//4
@@ -55,3 +55,8 @@ julia> hilbert(4)
 julia> detx(ans)
 1//6048000
  ```
+
+## Old permanent code
+
+The permanent of a matrix is now computed with a much more efficient method. The old code
+is archived in the file `old_permanent.jl`.
