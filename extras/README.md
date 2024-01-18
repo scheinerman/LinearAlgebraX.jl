@@ -3,7 +3,7 @@
 ## Projective planes
 
 The file `projective.jl` contains code for creating structures related 
-to finite projective planes of prime order.
+to finite projective planes of prime order. See also [RationalProjectivePlane](https://github.com/scheinerman/RationalProjectivePlane.jl).
 
 * `generate_points(p)` generates a list of the homogeneous coordinates of the 
 points (lines) of a finite projective plane of prime order `p`.
