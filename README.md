@@ -11,7 +11,7 @@ entries in matrices. Other exact numbers may work as well, but are not tested.
 
 As the goal of this module is always to give exact answers and, at the same time,
 be type stable, the results of many of these functions are `big`. That is, the `detx`
-of an integer matrix has entries of type `BigInt`. 
+of an integer matrix returns a `BigInt`. 
 
 ## Functions
 
