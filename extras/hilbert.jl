@@ -20,4 +20,3 @@ function hilbert(n::Int)
     end
     return A
 end
-

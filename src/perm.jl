@@ -28,5 +28,3 @@ function permanent(A::AbstractMatrix{T}) where {T}     # code by Daniel Scheiner
     s *= (-1)^n
     return s
 end
-
-

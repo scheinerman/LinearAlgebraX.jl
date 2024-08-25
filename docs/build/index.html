@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>LinearAlgebraX · LinearAlgebraX</title><meta name="title" content="LinearAlgebraX · LinearAlgebraX"/><meta property="og:title" content="LinearAlgebraX · LinearAlgebraX"/><meta property="twitter:title" content="LinearAlgebraX · LinearAlgebraX"/><meta name="description" content="Documentation for LinearAlgebraX."/><meta property="og:description" content="Documentation for LinearAlgebraX."/><meta property="twitter:description" content="Documentation for LinearAlgebraX."/><script data-outdated-warner src="assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="assets/documenter.js"></script><script src="search_index.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href>LinearAlgebraX</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li class="is-active"><a class="tocitem" href>LinearAlgebraX</a><ul class="internal"><li><a class="tocitem" href="#Functions"><span>Functions</span></a></li><li><a class="tocitem" href="#Examples"><span>Examples</span></a></li><li><a class="tocitem" href="#Homogeneous-Matrices"><span>Homogeneous Matrices</span></a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>LinearAlgebraX</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>LinearAlgebraX</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/scheinerman/LinearAlgebraX.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/scheinerman/LinearAlgebraX.jl/blob/master/docs/src/index.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="LinearAlgebraX"><a class="docs-heading-anchor" href="#LinearAlgebraX">LinearAlgebraX</a><a id="LinearAlgebraX-1"></a><a class="docs-heading-anchor-permalink" href="#LinearAlgebraX" title="Permalink"></a></h1><p>This module implements basic linear algebra methods for matrices with exact entries (e.g., <code>Rational{Int}</code> values).  The function names typically match the standard ones in Julia but with an <code>x</code> (for &quot;exact&quot;) appended.</p><p>The functions in this module work for all types of  <code>Integer</code>, <code>Rational</code>, <code>Complex{Integer}</code>, <code>Complex{Rational}</code>, and <code>Mod</code> entries in matrices. Other exact numbers may work as well, but are not tested. </p><p>As the goal of this module is always to give exact answers and, at the same time, be type stable, the results of many of these functions are <code>big</code>. That is, the <code>detx</code> of an integer matrix returns a <code>BigInt</code>. </p><h2 id="Functions"><a class="docs-heading-anchor" href="#Functions">Functions</a><a id="Functions-1"></a><a class="docs-heading-anchor-permalink" href="#Functions" title="Permalink"></a></h2><p>These functions in this module end with the letter <code>x</code> and have the same definitions as their counterparts that do not have an <code>x</code>. For exact types (such as <code>Int</code>s) these functions give exact results.</p><ul><li><code>detx</code> – exact determinant </li><li><code>cofactor_det</code>– slower exact determinant (via cofactor expansion)</li><li><code>nullspacex</code> – exact nullspace</li><li><code>rankx</code> – exact rank</li><li><code>invx</code> – exact inverse</li><li><code>rrefx</code> – row reduced echelon form</li><li><code>eye</code> – lovingly restored</li><li><code>char_poly</code> – characteristic polynomial</li><li><code>permanent</code> – permanent of a square matrix</li></ul><h2 id="Examples"><a class="docs-heading-anchor" href="#Examples">Examples</a><a id="Examples-1"></a><a class="docs-heading-anchor-permalink" href="#Examples" title="Permalink"></a></h2><h3 id="Determinant"><a class="docs-heading-anchor" href="#Determinant">Determinant</a><a id="Determinant-1"></a><a class="docs-heading-anchor-permalink" href="#Determinant" title="Permalink"></a></h3><pre><code class="nohighlight hljs">julia&gt; A = ones(Int,10,10)+eye(Int,10);
+
+julia&gt; det(A)
+11.000000000000004
+
+julia&gt; detx(A)
+11
+
+julia&gt; A = rand(Int,20,20) .% 20;
+
+julia&gt; det(A)
+3.3905496651565455e29
+
+julia&gt; detx(A)
+339054966515654744413389494504</code></pre><p>For certain <code>Mod</code> matrices, there may be noninvertible nonzero elements in which  case the Gaussian elimination algorithm may fail. If that happens, <code>detx</code>  falls back to using cofactor expansion which may be very slow. Should that  happen, a warning is generated.</p><pre><code class="nohighlight hljs">julia&gt; using Mods
+
+julia&gt; A = rand(Mod{10},5,5)
+5×5 Array{Mod{10},2}:
+ Mod{10}(6)  Mod{10}(1)  Mod{10}(8)  Mod{10}(7)  Mod{10}(9)
+ Mod{10}(6)  Mod{10}(4)  Mod{10}(6)  Mod{10}(9)  Mod{10}(0)
+ Mod{10}(9)  Mod{10}(8)  Mod{10}(7)  Mod{10}(8)  Mod{10}(0)
+ Mod{10}(9)  Mod{10}(1)  Mod{10}(9)  Mod{10}(1)  Mod{10}(3)
+ Mod{10}(5)  Mod{10}(4)  Mod{10}(5)  Mod{10}(9)  Mod{10}(0)
+
+julia&gt; detx(A)
+┌ Warning: Using cofactor expansion to calculate determinant; may be very slow.
+└ @ LinearAlgebraX ~/.julia/dev/LinearAlgebraX/src/detx.jl:41
+Mod{10}(4)</code></pre><h3 id="Nullspace"><a class="docs-heading-anchor" href="#Nullspace">Nullspace</a><a id="Nullspace-1"></a><a class="docs-heading-anchor-permalink" href="#Nullspace" title="Permalink"></a></h3><pre><code class="nohighlight hljs">julia&gt; A = reshape(collect(1:12),3,4)
+3×4 Array{Int64,2}:
+ 1  4  7  10
+ 2  5  8  11
+ 3  6  9  12
+
+julia&gt; nullspacex(A)
+4×2 Array{Rational{BigInt},2}:
+  1//1   2//1
+ -2//1  -3//1
+  1//1   0//1
+  0//1   1//1
+
+julia&gt; nullspace(A)
+4×2 Array{Float64,2}:
+ -0.475185  -0.272395
+  0.430549   0.717376
+  0.564458  -0.617566
+ -0.519821   0.172585</code></pre><h3 id="Rank"><a class="docs-heading-anchor" href="#Rank">Rank</a><a id="Rank-1"></a><a class="docs-heading-anchor-permalink" href="#Rank" title="Permalink"></a></h3><p>Consider the 12-by-12 Hibert matrix, <code>H</code> (see <code>hilbert.jl</code> in the <code>extras</code> folder):</p><pre><code class="nohighlight hljs">12×12 Array{Rational{Int64},2}:
+ 1//1   1//2   1//3   1//4   1//5   1//6   1//7   1//8   1//9   1//10  1//11  1//12
+ 1//2   1//3   1//4   1//5   1//6   1//7   1//8   1//9   1//10  1//11  1//12  1//13
+ 1//3   1//4   1//5   1//6   1//7   1//8   1//9   1//10  1//11  1//12  1//13  1//14
+ 1//4   1//5   1//6   1//7   1//8   1//9   1//10  1//11  1//12  1//13  1//14  1//15
+ 1//5   1//6   1//7   1//8   1//9   1//10  1//11  1//12  1//13  1//14  1//15  1//16
+ 1//6   1//7   1//8   1//9   1//10  1//11  1//12  1//13  1//14  1//15  1//16  1//17
+ 1//7   1//8   1//9   1//10  1//11  1//12  1//13  1//14  1//15  1//16  1//17  1//18
+ 1//8   1//9   1//10  1//11  1//12  1//13  1//14  1//15  1//16  1//17  1//18  1//19
+ 1//9   1//10  1//11  1//12  1//13  1//14  1//15  1//16  1//17  1//18  1//19  1//20
+ 1//10  1//11  1//12  1//13  1//14  1//15  1//16  1//17  1//18  1//19  1//20  1//21
+ 1//11  1//12  1//13  1//14  1//15  1//16  1//17  1//18  1//19  1//20  1//21  1//22
+ 1//12  1//13  1//14  1//15  1//16  1//17  1//18  1//19  1//20  1//21  1//22  1//23</code></pre><p>We compare the results of <code>rank</code> (from the <code>LinearAlgebra</code> module) and <code>rankx</code> (in this module):</p><pre><code class="nohighlight hljs">julia&gt; rank(H)
+11
+
+julia&gt; rankx(H)
+12</code></pre><h3 id="Inverse"><a class="docs-heading-anchor" href="#Inverse">Inverse</a><a id="Inverse-1"></a><a class="docs-heading-anchor-permalink" href="#Inverse" title="Permalink"></a></h3><pre><code class="nohighlight hljs">julia&gt; using Mods
+
+julia&gt; A = rand(Mod{11},5,5)
+5×5 Array{Mod{11},2}:
+ Mod{11}(2)   Mod{11}(4)  Mod{11}(4)  Mod{11}(0)   Mod{11}(2)
+ Mod{11}(9)   Mod{11}(4)  Mod{11}(5)  Mod{11}(1)  Mod{11}(10)
+ Mod{11}(3)   Mod{11}(4)  Mod{11}(5)  Mod{11}(6)   Mod{11}(0)
+ Mod{11}(5)  Mod{11}(10)  Mod{11}(4)  Mod{11}(5)   Mod{11}(4)
+ Mod{11}(9)  Mod{11}(10)  Mod{11}(7)  Mod{11}(8)   Mod{11}(9)
+
+julia&gt; B = invx(A)
+5×5 Array{Mod{11},2}:
+ Mod{11}(4)  Mod{11}(5)  Mod{11}(0)   Mod{11}(6)   Mod{11}(8)
+ Mod{11}(7)  Mod{11}(4)  Mod{11}(9)  Mod{11}(10)   Mod{11}(3)
+ Mod{11}(6)  Mod{11}(0)  Mod{11}(2)   Mod{11}(5)   Mod{11}(5)
+ Mod{11}(3)  Mod{11}(4)  Mod{11}(9)  Mod{11}(10)  Mod{11}(10)
+ Mod{11}(9)  Mod{11}(9)  Mod{11}(0)   Mod{11}(8)   Mod{11}(9)
+
+julia&gt; A*B
+5×5 Array{Mod{11},2}:
+ Mod{11}(1)  Mod{11}(0)  Mod{11}(0)  Mod{11}(0)  Mod{11}(0)
+ Mod{11}(0)  Mod{11}(1)  Mod{11}(0)  Mod{11}(0)  Mod{11}(0)
+ Mod{11}(0)  Mod{11}(0)  Mod{11}(1)  Mod{11}(0)  Mod{11}(0)
+ Mod{11}(0)  Mod{11}(0)  Mod{11}(0)  Mod{11}(1)  Mod{11}(0)
+ Mod{11}(0)  Mod{11}(0)  Mod{11}(0)  Mod{11}(0)  Mod{11}(1)
+ ```
+
+ ### Characteristic polynomial
+</code></pre><p>julia&gt; using SimplePolynomials, LinearAlgebra</p><p>julia&gt; x = getx() x</p><p>julia&gt; A = triu(ones(Int,5,5)) 5×5 Array{Int64,2}:  1  1  1  1  1  0  1  1  1  1  0  0  1  1  1  0  0  0  1  1  0  0  0  0  1</p><p>julia&gt; char_poly(A) -1 + 5<em>x - 10</em>x^2 + 10<em>x^3 - 5</em>x^4 + x^5</p><p>julia&gt; ans == (x-1)^5 true</p><p>julia&gt; using Mods</p><p>julia&gt; A = rand(Mod{17},4,4) 4×4 Array{Mod{17},2}:  Mod{17}(16)  Mod{17}(10)   Mod{17}(9)  Mod{17}(12)  Mod{17}(15)   Mod{17}(1)   Mod{17}(1)   Mod{17}(6)   Mod{17}(3)   Mod{17}(2)   Mod{17}(5)  Mod{17}(11)   Mod{17}(5)  Mod{17}(15)  Mod{17}(15)   Mod{17}(7)</p><p>julia&gt; char_poly(A) Mod{17}(1) + Mod{17}(1)<em>x + Mod{17}(16)</em>x^2 + Mod{17}(5)<em>x^3 + Mod{17}(1)</em>x^4</p><p>julia&gt; detx(A) Mod{17}(1)</p><pre><code class="nohighlight hljs">
+ ### Row reduced echelon form
+
+ ```
+ julia&gt; A = rand(Int,4,6) .% 10
+4×6 Array{Int64,2}:
+ 6   8  0  -6  -5   4
+ 0  -5  2   0  -3  -4
+ 0  -4  2  -8   7  -8
+ 1  -3  7   2  -6   2
+
+julia&gt; c = A[:,1] + A[:,2] - A[:,3]
+4-element Array{Int64,1}:
+ 14
+ -7
+ -6
+ -9
+
+julia&gt; A = [c A]
+4×7 Array{Int64,2}:
+ 14  6   8  0  -6  -5   4
+ -7  0  -5  2   0  -3  -4
+ -6  0  -4  2  -8   7  -8
+ -9  1  -3  7   2  -6   2
+
+julia&gt; rrefx(A)
+4×7 Array{Rational{Int64},2}:
+ 1//1  0//1  0//1  -1//1  0//1   -23//130  -36//65
+ 0//1  1//1  0//1   1//1  0//1  -883//325  158//325
+ 0//1  0//1  1//1   1//1  0//1   551//650  512//325
+ 0//1  0//1  0//1   0//1  1//1  -379//325  204//325
+ ```
+
+ ##  Homogeneous Vectors
+
+ A point in projective space is represented by a *homogeneous vector*. This is 
+ a list of numbers (like an ordinary vector) but two such vectors are equal 
+ if and only if one is a nonzero multiple of the other. 
+
+ We provide the `HVector` type to represent homogeneous vectors. The entries 
+ in an `HVector` are scaled so that the last nonzero coordinate is `1`. 
+ (Technically, we should forbid the all zero vector, but we don&#39;t implement
+ that restriction.)
+
+ To create an `HVector` provide either a list (one-dimensional array) of values 
+ or a list of arguments:
+ ```
+ julia&gt; v = HVector([1,-2,3])
+[1//3 : -2//3 : 1//1]
+
+julia&gt; w = HVector(2,-4,6)
+[1//3 : -2//3 : 1//1]
+
+julia&gt; v==w
+true</code></pre><p>Entries in an <code>HVector</code> can be retrieved individually, or the entire vector can  be converted to an array:</p><pre><code class="nohighlight hljs">julia&gt; v[2]
+-2//3
+
+julia&gt; Vector(v)
+3-element Array{Rational{Int64},1}:
+  1//3
+ -2//3
+  1//1</code></pre><p>However, entries cannot be assigned:</p><pre><code class="nohighlight hljs">ulia&gt; v[2] = 3//4
+ERROR: MethodError: no method matching setindex!(::HVector{Rational{Int64}}, ::Rational{Int64}, ::Int64)</code></pre><h3 id="Operations-for-HVectors"><a class="docs-heading-anchor" href="#Operations-for-HVectors">Operations for <code>HVector</code>s</a><a id="Operations-for-HVectors-1"></a><a class="docs-heading-anchor-permalink" href="#Operations-for-HVectors" title="Permalink"></a></h3><p>The product of a matrix and a homogeneous vector is a homogeneous vector:</p><pre><code class="nohighlight hljs">julia&gt; A = rand(Int,3,3) .% 5
+3×3 Array{Int64,2}:
+ -1   0   0
+  3   0  -2
+  3  -1  -2
+
+julia&gt; A*v
+[1//1 : 3//1 : 1//1]
+
+julia&gt; A*Vector(v)
+3-element Array{Rational{Int64},1}:
+ -1//3
+ -1//1
+ -1//3</code></pre><p>The dot product of two homogeneous vectors is a scalar. Since homogeneous vectors are unchanged by scaling, we only distinguish between zero and nonzero results. Specifically, the dot product is <code>0</code> if the two vectors are orthogonal and  <code>1</code> otherwise. </p><pre><code class="nohighlight hljs">julia&gt; using Mods
+
+julia&gt; u = Mod{3}(1)
+Mod{3}(1)
+
+julia&gt; v = HVector(u,u,u)
+[Mod{3}(1) : Mod{3}(1) : Mod{3}(1)]
+
+julia&gt; dot(v,v)
+0
+
+julia&gt; w = HVector(-1,2,1)
+[-1//1 : 2//1 : 1//1]
+
+julia&gt; dot(v,w)
+1</code></pre><h2 id="Homogeneous-Matrices"><a class="docs-heading-anchor" href="#Homogeneous-Matrices">Homogeneous Matrices</a><a id="Homogeneous-Matrices-1"></a><a class="docs-heading-anchor-permalink" href="#Homogeneous-Matrices" title="Permalink"></a></h2><p>We also provide <code>HMatrix</code> to represent a homogeneous matrix. These are  constructed by passing an (ordinary) matrix. ``` julia&gt; A = rand(Int,3,3).%5 3×3 Array{Int64,2}:  0  -4   3  1   4  -2  3   0  -3</p><p>julia&gt; HMatrix(A) HMatrix: Rational{Int64}[0//1 4//3 -1//1; -1//3 -4//3 2//3; -1//1 0//1 1//1]</p><p>julia&gt; Matrix(ans) 3×3 Array{Rational{Int64},2}:   0//1   4//3  -1//1  -1//3  -4//3   2//3  -1//1   0//1   1//1  ```</p></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.5.0 on <span class="colophon-date" title="Sunday 25 August 2024 16:14">Sunday 25 August 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

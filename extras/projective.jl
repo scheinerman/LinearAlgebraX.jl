@@ -40,14 +40,14 @@ of a finite projective plane of prime order `p`.
 """
 function incidence_matrix(p::Int)::Matrix
     pts = generate_points(p)
-    n = p*p + p + 1
-    A = zeros(Int,n,n)
+    n = p * p + p + 1
+    A = zeros(Int, n, n)
     for u = 1:n
         P = pts[u]
         for v = 1:n
             Q = pts[v]
-            if dot(P,Q)==0
-                A[u,v] = 1
+            if dot(P, Q) == 0
+                A[u, v] = 1
             end
         end
     end
@@ -60,22 +60,22 @@ incidence graph of a finite projective plane of prime order `p`.
 """
 function incidence_graph(p::Int)::UndirectedGraph{Int}
     M = incidence_matrix(p)
-    r,c = size(M)
-    A = [ zeros(r,c)  M; copy(M')  zeros(r,c) ]
+    r, c = size(M)
+    A = [zeros(r, c) M; copy(M') zeros(r, c)]
     G = UndirectedGraph(A)
-end 
+end
 
 function incidence_hypergraph(p::Int)::HyperGraph
     VV = generate_points(p)
     H = HyperGraph{HVector{Mod{p,Int}}}()
     for v in VV
-        add!(H,v)
-    end 
+        add!(H, v)
+    end
 
-    for v in VV 
-        S = [ w for w in VV if dot(v,w)==0 ]
-        add!(H,Set(S))
-    end 
+    for v in VV
+        S = [w for w in VV if dot(v, w) == 0]
+        add!(H, Set(S))
+    end
 
-    return H 
-end 
+    return H
+end
