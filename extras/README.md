@@ -55,8 +55,3 @@ julia> hilbert(4)
 julia> detx(ans)
 1//6048000
  ```
-
-## Old permanent code
-
-The permanent of a matrix is now computed with a much more efficient method. The old code
-is archived in the file `old_permanent.jl`.
