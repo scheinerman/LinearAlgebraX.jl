@@ -29,15 +29,15 @@ For exact types (such as `Int`s) these functions give exact results.
 * `char_poly` -- characteristic polynomial
 * `permanent` -- permanent of a square matrix
 
-## Examples
+Examples follow.
 
-### Determinant
+## Determinant
 
 ```
 julia> A = ones(Int,10,10)+eye(Int,10);
 
 julia> det(A)
-11.000000000000004
+10.999999999999998
 
 julia> detx(A)
 11
@@ -75,7 +75,7 @@ Mod{10}(4)
 
 
 
-### Nullspace
+## Nullspace
 
 ```
 julia> A = reshape(collect(1:12),3,4)
@@ -99,7 +99,7 @@ julia> nullspace(A)
  -0.519821   0.172585
 ```
 
-### Rank
+## Rank
 
 Consider the 12-by-12 Hibert matrix, `H` (see `hilbert.jl` in the `extras` folder):
 ```
@@ -127,7 +127,7 @@ julia> rankx(H)
 12
 ```
 
-### Inverse
+## Inverse
 
 ```
 julia> using Mods
@@ -157,7 +157,7 @@ julia> A*B
  Mod{11}(0)  Mod{11}(0)  Mod{11}(0)  Mod{11}(0)  Mod{11}(1)
  ```
 
- ### Characteristic polynomial
+ ## Characteristic polynomial
 
 ```
 julia> using SimplePolynomials, LinearAlgebra
@@ -195,7 +195,7 @@ julia> detx(A)
 Mod{17}(1)
 ```
 
- ### Row reduced echelon form
+ ## Row reduced echelon form
 
  ```
  julia> A = rand(Int,4,6) .% 10
@@ -265,7 +265,7 @@ julia> Vector(v)
 ```
 However, entries cannot be assigned:
 ```
-ulia> v[2] = 3//4
+julia> v[2] = 3//4
 ERROR: MethodError: no method matching setindex!(::HVector{Rational{Int64}}, ::Rational{Int64}, ::Int64)
 ```
 
@@ -332,5 +332,5 @@ julia> Matrix(ans)
   0//1   4//3  -1//1
  -1//3  -4//3   2//3
  -1//1   0//1   1//1
- ```
+```
  
