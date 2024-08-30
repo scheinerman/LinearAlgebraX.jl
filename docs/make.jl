@@ -2,4 +2,4 @@
 # julia --color=yes --project make.jl
 
 using Documenter, LinearAlgebraX
-makedocs(; sitename="LinearAlgebraX")
+makedocs(; sitename = "LinearAlgebraX")
