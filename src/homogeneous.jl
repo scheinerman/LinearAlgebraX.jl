@@ -121,7 +121,7 @@ end
 
 adjoint(A::HMatrix) = HMatrix(adjoint(A.data))
 
-hash(x::HObject, h::UInt = UInt(0)) = hash(x.data, h)
+hash(x::HObject, h::UInt) = hash(x.data, h)
 
 Vector(x::HVector) = copy(x.data)
 Matrix(x::HMatrix) = copy(x.data)
